@@ -1,9 +1,93 @@
 var express = require("express");
 var router = express.Router();
+const db = require("../model/helper");
 
 /* GET home page. */
 router.get("/", function (req, res, next) {
   res.render("index", { title: "Express" });
+});
+
+// INSERT a new food type into the DB
+router.post("/foodTypes", async (req, res) => {
+  //your code here
+  const typeOfFood = req.body.typeOfFood;
+
+  try {
+    await db(`INSERT INTO foodTypes (typeOfFood) VALUES ("${typeOfFood}");`);
+
+    const results = await db("SELECT * FROM foodTypes;");
+    // everything is awesome
+    res.status(201).send(results.data);
+  } catch (err) {
+    res.status(500).send(err);
+  }
+});
+
+// INSERT a new restaurant into the DB
+router.post("/restaurants", async (req, res) => {
+  //your code here
+  const restaurant = req.body.restaurant;
+  const allergyMenu = req.body.allergyMenu;
+  const typeOfFoodID = req.body.typeOfFoodID;
+  const glovoLink = req.body.glovoLink;
+  const uberEatsLink = req.body.uberEatsLink;
+  const glovoRating = req.body.glovoRating;
+  const uberEatsRating = req.body.uberEatsRating;
+
+  try {
+    await db(
+      `INSERT INTO restaurants (restaurant, allergyMenu, typeOfFoodID, glovoLink, uberEatsLink, glovoRating, uberEatsRating) 
+      VALUES ("${restaurant}", "${allergyMenu}", ${typeOfFoodID}, "${glovoLink}", "${uberEatsLink}", ${glovoRating}, ${uberEatsRating});`
+    );
+
+    const results = await db("SELECT * FROM restaurants;");
+    // everything is awesome
+    res.status(201).send(results.data);
+  } catch (err) {
+    res.status(500).send(err);
+  }
+});
+
+// GET foodTypes list
+router.get("/foodTypes", function (req, res) {
+  db("SELECT * FROM foodTypes;")
+    .then((results) => {
+      res.send(results.data);
+    })
+    .catch((err) => res.status(500).send(err));
+});
+
+// GET restaurants by typeOfFood
+router.get("/foodTypes/:typeOfFoodID/restaurants", async function (req, res) {
+  const { typeOfFoodID } = req.params;
+  try {
+    const results = await db(
+      `SELECT * FROM restaurants WHERE typeOfFoodID = ${typeOfFoodID};`
+    );
+    res.status(201).send(results.data);
+  } catch (err) {
+    res.status(500).send(err);
+  }
+});
+
+//GET list of restaurants
+router.get("/restaurants", function (req, res) {
+  db("SELECT * FROM restaurants;")
+    .then((results) => {
+      res.send(results.data);
+    })
+    .catch((err) => res.status(500).send(err));
+});
+
+//GET one restaurant by ID
+router.get("/restaurants/:id", async function (req, res) {
+  const { id } = req.params;
+  try {
+    const results = await db(`SELECT * FROM restaurants WHERE id = ${id}`);
+    res.status(201).send(results.data);
+  } catch (err) {
+    res.status(500).send(err);
+  }
 });
 
 module.exports = router;

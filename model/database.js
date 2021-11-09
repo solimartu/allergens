@@ -21,7 +21,6 @@ con.connect(function (err) {
   let sql = `DROP TABLE if exists restaurants; CREATE TABLE restaurants (
       id INT(255) NOT NULL AUTO_INCREMENT,
       restaurant varchar(255) NOT NULL,
-      deliveryService varchar(255) NOT NULL,
       allergyMenu varchar(255) NOT NULL,
       typeOfFoodID INT(255) NOT NULL,
       glovoLink varchar(255) NOT NULL,
