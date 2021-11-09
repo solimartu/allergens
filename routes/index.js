@@ -57,6 +57,17 @@ router.get("/foodTypes", function (req, res) {
     .catch((err) => res.status(500).send(err));
 });
 
+// GET typeOfFood by id
+router.get("/foodTypes/:id", async function (req, res) {
+  const { id } = req.params;
+  try {
+    const results = await db(`SELECT * FROM foodTypes WHERE id = ${id};`);
+    res.status(201).send(results.data);
+  } catch (err) {
+    res.status(500).send(err);
+  }
+});
+
 // GET restaurants by typeOfFood
 router.get("/foodTypes/:typeOfFoodID/restaurants", async function (req, res) {
   const { typeOfFoodID } = req.params;

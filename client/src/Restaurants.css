@@ -5,7 +5,23 @@
   padding-top: 30px;
   margin: 5px;
   color: black;
+}
+
+.glovo {
+  background-color: yellow;
+  color: green;
   font-weight: bold;
+  border: none;
+  border-radius: 25px;
+  padding-left: 5px;
+  padding-right: 5px;
+  margin: 5px;
+  box-shadow: 3px 3px;
+}
+
+.allergy {
+  border: none;
+  border-radius: 10px;
 }
 
 .box {
@@ -16,6 +32,6 @@
   justify-content: center;
 }
 
-body {
-  background-color: azure;
+.card-text {
+  font-weight: lighter;
 }
