@@ -1,0 +1,45 @@
+.my-custom-scrollbar {
+  position: relative;
+  height: 300px;
+  overflow: auto;
+}
+.table-wrapper-scroll-y {
+  display: block;
+}
+
+.deleteButton {
+  border: none;
+  background-color: transparent;
+  margin-left: 5px;
+  font-size: x-small;
+}
+
+.deleteButton:hover {
+  color: red;
+}
+
+.adminBox {
+  border: 2px solid black;
+}
+
+form {
+  border: 2px solid black;
+  height: 300px;
+  background-color: white;
+}
+
+.submit {
+  text-align: center;
+}
+
+.header {
+  margin-bottom: 15px;
+}
+
+table {
+  background-color: white;
+}
+
+label {
+  font-size: 15px;
+}

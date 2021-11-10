@@ -40,9 +40,11 @@ router.post("/restaurants", async (req, res) => {
       VALUES ("${restaurant}", "${allergyMenu}", ${typeOfFoodID}, "${glovoLink}", "${uberEatsLink}", ${glovoRating}, ${uberEatsRating});`
     );
 
-    const results = await db("SELECT * FROM restaurants;");
+    const results = await db(
+      "SELECT * FROM restaurants ORDER BY id DESC LIMIT 1;"
+    );
     // everything is awesome
-    res.status(201).send(results.data);
+    res.status(201).send(results.data[0]);
   } catch (err) {
     res.status(500).send(err);
   }
@@ -96,6 +98,18 @@ router.get("/restaurants/:id", async function (req, res) {
   try {
     const results = await db(`SELECT * FROM restaurants WHERE id = ${id}`);
     res.status(201).send(results.data);
+  } catch (err) {
+    res.status(500).send(err);
+  }
+});
+
+//DELETE one restaurant by ID
+router.delete("/restaurants/:id", async function (req, res, next) {
+  try {
+    const { id } = req.params;
+    await db(`DELETE FROM restaurants WHERE id=${id}`);
+    const results = await db(`SELECT * FROM restaurants`);
+    res.send(results.data);
   } catch (err) {
     res.status(500).send(err);
   }

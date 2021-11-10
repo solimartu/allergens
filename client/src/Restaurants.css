@@ -27,11 +27,15 @@
 .box {
   display: grid;
   grid-template-columns: [first] 30% [line2] 30% [line3] 30%;
-  margin-top: 15%;
+
   margin-bottom: 15%;
   justify-content: center;
 }
 
 .card-text {
   font-weight: lighter;
+}
+
+.header {
+  text-align: center;
 }

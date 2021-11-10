@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link, Outlet } from "react-router-dom";
 import "./App.css";
+import NavBar from "./NavBar";
 
 export default function UserView() {
   let [foodTypes, setFoodTypes] = useState([]);
@@ -17,17 +18,27 @@ export default function UserView() {
 
   return (
     <div>
+      <NavBar />
       <h1></h1>
+
       <div className="container">
         <div className="box">
+          <Link
+            className="link card cardBox header"
+            style={{ textDecoration: "none" }}
+            to="allRestaurants"
+          >
+            <div>All Restaurants</div>
+          </Link>
+
           {foodTypes.map((foodType) => (
-            <div>
+            <div className="cardBox">
               <Link
                 to={`/${foodType.id}`}
                 key={foodType.id}
                 style={{ textDecoration: "none" }}
               >
-                <div className="card">{foodType.typeOfFood}</div>
+                <div className="card border-bottom">{foodType.typeOfFood}</div>
               </Link>{" "}
             </div>
           ))}
