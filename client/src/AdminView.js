@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import NavBar from "./NavBar";
+
 import "./AdminView.css";
 
 export default function AdminView() {
@@ -75,9 +75,8 @@ export default function AdminView() {
 
   return (
     <div>
-      <NavBar />
       <div className="container d-flex justify-content-around">
-        <form onSubmit={(e) => handleSubmit(e)}>
+        <form className="adminForm" onSubmit={(e) => handleSubmit(e)}>
           <div>
             <h5 className="header">Add Restaurant to Database</h5>
           </div>

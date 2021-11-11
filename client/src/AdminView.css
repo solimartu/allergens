@@ -22,7 +22,7 @@
   border: 2px solid black;
 }
 
-form {
+.adminForm {
   border: 2px solid black;
   height: 300px;
   background-color: white;

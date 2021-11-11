@@ -64,40 +64,44 @@ router.get("/foodTypes/:id", async function (req, res) {
   const { id } = req.params;
   try {
     const results = await db(`SELECT * FROM foodTypes WHERE id = ${id};`);
-    res.status(201).send(results.data);
+    res.status(200).send(results.data);
   } catch (err) {
     res.status(500).send(err);
   }
 });
 
-// GET restaurants by typeOfFood
-router.get("/foodTypes/:typeOfFoodID/restaurants", async function (req, res) {
-  const { typeOfFoodID } = req.params;
+// GET list of restaurants
+router.get("/restaurants/", async function (req, res) {
+  let restaurant = req.query.name;
+  let typeOfFood = req.query.typeOfFood;
+
   try {
-    const results = await db(
-      `SELECT * FROM restaurants WHERE typeOfFoodID = ${typeOfFoodID};`
-    );
-    res.status(201).send(results.data);
+    if (!restaurant && !typeOfFood) {
+      const results = await db(`SELECT * FROM restaurants;`);
+      res.status(200).send(results.data);
+    } else if (!typeOfFood) {
+      const searchResults = await db(
+        `SELECT * FROM restaurants WHERE restaurant LIKE '%${restaurant}%';`
+      );
+      res.status(200).send(searchResults.data);
+    } else {
+      const results = await db(
+        `SELECT * FROM restaurants WHERE typeOfFoodID = ${typeOfFood};`
+      );
+      res.status(200).send(results.data);
+    }
   } catch (err) {
     res.status(500).send(err);
   }
-});
-
-//GET list of restaurants
-router.get("/restaurants", function (req, res) {
-  db("SELECT * FROM restaurants;")
-    .then((results) => {
-      res.send(results.data);
-    })
-    .catch((err) => res.status(500).send(err));
 });
 
 //GET one restaurant by ID
 router.get("/restaurants/:id", async function (req, res) {
   const { id } = req.params;
   try {
+    console.log("here");
     const results = await db(`SELECT * FROM restaurants WHERE id = ${id}`);
-    res.status(201).send(results.data);
+    res.status(200).send(results.data);
   } catch (err) {
     res.status(500).send(err);
   }

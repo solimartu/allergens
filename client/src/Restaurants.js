@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import "./Restaurants.css";
-import NavBar from "./NavBar";
 
 export default function Restaurants() {
   let [restaurants, setRestaurants] = useState([]);
@@ -10,7 +9,7 @@ export default function Restaurants() {
 
   useEffect(() => {
     const fetchData = async () => {
-      const response = await fetch(`/foodTypes/${typeOfFoodID}/restaurants`);
+      const response = await fetch(`/restaurants/?typeOfFood=${typeOfFoodID}`);
       const restaurants = await response.json();
 
       setRestaurants(restaurants);
@@ -29,9 +28,6 @@ export default function Restaurants() {
 
   return (
     <div>
-      <div>
-        <NavBar />
-      </div>
       <div className="container">
         {title.map((title) => (
           <div className="header">

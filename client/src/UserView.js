@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link, Outlet } from "react-router-dom";
 import "./App.css";
-import NavBar from "./NavBar";
 
 export default function UserView() {
   let [foodTypes, setFoodTypes] = useState([]);
@@ -18,7 +17,6 @@ export default function UserView() {
 
   return (
     <div>
-      <NavBar />
       <h1></h1>
 
       <div className="container">
