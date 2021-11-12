@@ -16,33 +16,26 @@ export default function UserView() {
   }, []);
 
   return (
-    <div>
-      <h1></h1>
-
-      <div className="container">
-        <div className="box">
-          <Link
-            className="link card cardBox header"
-            style={{ textDecoration: "none" }}
-            to="allRestaurants"
-          >
-            <div>All Restaurants</div>
-          </Link>
-
-          {foodTypes.map((foodType) => (
-            <div className="cardBox">
-              <Link
-                to={`/${foodType.id}`}
-                key={foodType.id}
-                style={{ textDecoration: "none" }}
-              >
-                <div className="card border-bottom">{foodType.typeOfFood}</div>
-              </Link>{" "}
-            </div>
-          ))}
-          <Outlet />
+    <div className="menu">
+      <input type="checkbox" id="toggle" />
+      <label id="show-menu" for="toggle">
+        <div class="btn">
+          <i class="material-icons md-36 toggleBtn menuBtn">menu</i>
+          <i class="material-icons md-36 toggleBtn closeBtn">close</i>
         </div>
-      </div>
+        {foodTypes.map((foodType) => (
+          <div className="btn">
+            <Link
+              to={`/${foodType.id}`}
+              key={foodType.id}
+              style={{ textDecoration: "none" }}
+            >
+              <i className="material-icons md-36">{foodType.icon}</i>
+            </Link>{" "}
+          </div>
+        ))}
+        <Outlet />
+      </label>
     </div>
   );
 }
