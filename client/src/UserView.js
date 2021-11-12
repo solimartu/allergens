@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link, Outlet } from "react-router-dom";
-import "./App.css";
+import "./UserView.css";
 
 export default function UserView() {
   let [foodTypes, setFoodTypes] = useState([]);
@@ -17,7 +17,7 @@ export default function UserView() {
 
   return (
     <div className="menu">
-      <input type="checkbox" id="toggle" />
+      <input className="menuInput" type="checkbox" id="toggle" />
       <label id="show-menu" for="toggle">
         <div class="btn">
           <i class="material-icons md-36 toggleBtn menuBtn">menu</i>
