@@ -39,3 +39,7 @@
 .header {
   text-align: center;
 }
+
+body {
+  overflow: auto !important;
+}

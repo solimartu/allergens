@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import "./App.css";
+import "./Restaurants.css";
 
 export default function AllRestaurants() {
   let [allRestaurants, setAllRestaurants] = useState([]);

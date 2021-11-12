@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { Link, Outlet } from "react-router-dom";
 import "./UserView.css";
+import Footer from "./Footer";
+import AllRestaurants from "./AllRestaurants";
 
 export default function UserView() {
   let [foodTypes, setFoodTypes] = useState([]);
@@ -16,26 +18,31 @@ export default function UserView() {
   }, []);
 
   return (
-    <div className="menu">
-      <input className="menuInput" type="checkbox" id="toggle" />
-      <label id="show-menu" for="toggle">
-        <div class="btn">
-          <i class="material-icons md-36 toggleBtn menuBtn">menu</i>
-          <i class="material-icons md-36 toggleBtn closeBtn">close</i>
-        </div>
-        {foodTypes.map((foodType) => (
-          <div className="btn">
-            <Link
-              to={`/${foodType.id}`}
-              key={foodType.id}
-              style={{ textDecoration: "none" }}
-            >
-              <i className="material-icons md-36">{foodType.icon}</i>
-            </Link>{" "}
+    <div>
+      <div className="menu">
+        <input className="menuInput" type="checkbox" id="toggle" />
+        <label id="show-menu" for="toggle">
+          <div class="btn">
+            <i class="material-icons md-36 toggleBtn menuBtn">menu</i>
+            <i class="material-icons md-36 toggleBtn closeBtn">close</i>
           </div>
-        ))}
-        <Outlet />
-      </label>
+          {foodTypes.map((foodType) => (
+            <div className="btn">
+              <Link
+                to={`/${foodType.id}`}
+                key={foodType.id}
+                style={{ textDecoration: "none" }}
+              >
+                <i className="material-icons md-36">{foodType.icon}</i>
+              </Link>{" "}
+            </div>
+          ))}
+          <Outlet />
+        </label>
+      </div>
+      <div>
+        <Footer />
+      </div>
     </div>
   );
 }

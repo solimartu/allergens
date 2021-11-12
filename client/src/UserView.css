@@ -184,3 +184,14 @@ body {
   transform: translateY(0px);
   opacity: 1;
 }
+
+.footer {
+  margin-top: 1rem;
+  padding: 1rem;
+  background-color: rgb(235, 195, 64);
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  text-align: center;
+}
