@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link, Outlet } from "react-router-dom";
 import "./UserView.css";
-import Footer from "./Footer";
-import AllRestaurants from "./AllRestaurants";
 
 export default function UserView() {
   let [foodTypes, setFoodTypes] = useState([]);
@@ -39,9 +37,6 @@ export default function UserView() {
           ))}
           <Outlet />
         </label>
-      </div>
-      <div>
-        <Footer />
       </div>
     </div>
   );

@@ -35,34 +35,61 @@ export default function AllRestaurants() {
 
   return (
     <div>
-      <div className="box cardBox header">
-        <div className="card">
-          sort by:
-          <button value="rating" onClick={(e) => sortArray(e.target.value)}>
-            rating
-          </button>
-          <button onClick={(e) => sortByName(e)} value="name">
-            restaurant name
-          </button>
+      <div className="sort">
+        <div className="dropdown2">
+          <button className="dropbtn2">SORT BY</button>
+          <div className="dropdown-content2">
+            <button
+              value="rating"
+              onClick={(e) => sortArray(e.target.value)}
+              className="dropdown-item2"
+            >
+              RATING
+            </button>
+
+            <button
+              onClick={(e) => sortByName(e)}
+              value="name"
+              className="dropdown-item2"
+            >
+              RESTAURANT
+            </button>
+          </div>
         </div>
+      </div>
+      <div className="box header">
         {allRestaurants.map((restaurant) => (
-          <div className="cardBox">
+          <div className="card-deck">
             <div className="card">
-              <h4 className="card-title">{restaurant.restaurant}</h4>
-              <div className="card-text">
-                <div className="rating">
-                  Glovo Rating: {restaurant.glovoRating * 100}%
+              <img
+                className="card-img-top"
+                src={restaurant.imgLink}
+                alt="Card image cap"
+              />
+              <div>
+                <div className="card-body">
+                  <h4 className="card-title">{restaurant.restaurant}</h4>
+                  <div className="card-text">
+                    <div className="allergyLink">
+                      <a href={restaurant.allergyMenu}>
+                        <button className="allergy">Allergy Menu</button>
+                      </a>
+                    </div>
+                    <div className="text-muted">
+                      <div className="material-icons"> thumb_up </div>
+                      {restaurant.glovoRating * 100}%{" "}
+                    </div>
+                  </div>
                 </div>
-                <div className="allergyLink">
-                  <a href={restaurant.allergyMenu}>
-                    <button className="allergy">Allergy Menu</button>
-                  </a>
-                </div>
-                <div className="glovoLink">
-                  <a href={restaurant.glovoLink}>
-                    <button className="glovo">Glovo</button>
-                  </a>
-                </div>
+              </div>
+              <div className="card-footer">
+                <small className="text-muted">
+                  <div>
+                    <a href={restaurant.glovoLink}>
+                      <button className="glovo">Glovo</button>
+                    </a>
+                  </div>
+                </small>
               </div>
             </div>
           </div>

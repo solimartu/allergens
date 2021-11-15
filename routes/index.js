@@ -9,14 +9,13 @@ router.get("/", function (req, res, next) {
 
 // INSERT a new food type into the DB
 router.post("/foodTypes", async (req, res) => {
-  //your code here
   const typeOfFood = req.body.typeOfFood;
 
   try {
     await db(`INSERT INTO foodTypes (typeOfFood) VALUES ("${typeOfFood}");`);
 
     const results = await db("SELECT * FROM foodTypes;");
-    // everything is awesome
+
     res.status(201).send(results.data);
   } catch (err) {
     res.status(500).send(err);
@@ -25,7 +24,6 @@ router.post("/foodTypes", async (req, res) => {
 
 // INSERT a new restaurant into the DB
 router.post("/restaurants", async (req, res) => {
-  //your code here
   const restaurant = req.body.restaurant;
   const allergyMenu = req.body.allergyMenu;
   const typeOfFoodID = req.body.typeOfFoodID;
@@ -43,7 +41,7 @@ router.post("/restaurants", async (req, res) => {
     const results = await db(
       "SELECT * FROM restaurants ORDER BY id DESC LIMIT 1;"
     );
-    // everything is awesome
+
     res.status(201).send(results.data[0]);
   } catch (err) {
     res.status(500).send(err);

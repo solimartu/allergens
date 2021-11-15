@@ -3,10 +3,15 @@ import { Link } from "react-router-dom";
 
 export default function Footer() {
   return (
-    <div className="footer">
-      <Link to={"allRestaurants"}>
+    <div className="footer sticky-bottom">
+      <Link style={{ textDecoration: "none" }} to={"/"}>
         {" "}
-        <button>see all restaurants</button>
+        <button className="footerButton material-icons">chevron_left</button>
+      </Link>
+
+      <Link style={{ textDecoration: "none" }} to={"allRestaurants"}>
+        {" "}
+        <button className="footerButton material-icons">chevron_right</button>
       </Link>
     </div>
   );

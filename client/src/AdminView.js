@@ -75,10 +75,10 @@ export default function AdminView() {
 
   return (
     <div>
-      <div className="container d-flex justify-content-around">
+      <div className="adminContainer">
         <form className="adminForm" onSubmit={(e) => handleSubmit(e)}>
           <div>
-            <h5 className="header">Add Restaurant to Database</h5>
+            <h5 className="adminHeader">Add Restaurant to Database</h5>
           </div>
           <div className="form-group">
             <label htmlFor="restaurant">Restaurant Name</label>
@@ -87,7 +87,7 @@ export default function AdminView() {
               value={input.restaurant}
               placeholder="restaurant"
               name="restaurant"
-              className="form-control;"
+              className="form-control rInput"
             ></input>
           </div>
           <div className="d-flex">
@@ -124,7 +124,7 @@ export default function AdminView() {
               ></input>
             </div>
 
-            <div>
+            <div className="form-group">
               <label htmlFor="uberEatsLink">Link to UberEats</label>
               <input
                 onChange={(e) => handleChange(e)}
@@ -158,11 +158,11 @@ export default function AdminView() {
               ></input>
             </div>
           </div>
-          <button className="submit">Add Restaurant</button>
+          <button className="submitButton">Add Restaurant</button>
         </form>
 
         <div className="table-wrapper-scroll-y my-custom-scrollbar adminBox">
-          <table className="table table-bordered table-striped mb-0">
+          <table className="table table-striped mb-0">
             <thead>
               <tr>
                 <th scope="col">id</th>

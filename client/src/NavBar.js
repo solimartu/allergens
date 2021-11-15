@@ -15,7 +15,7 @@ export default function NavBar() {
   };
 
   return (
-    <div className="navbar navbar-expand-lg navbar-light bg-light sticky-top justify-content-between">
+    <div className="d-flex sticky-top justify-content-between Navigation">
       <Link style={{ textDecoration: "none" }} to="/">
         <button className="homeButton">HOME</button>
       </Link>
@@ -28,7 +28,7 @@ export default function NavBar() {
           className="input"
           name="restaurant"
           value={input}
-          placeholder="restaurant name"
+          placeholder="search..."
           aria-label="Search"
         ></input>
         <Link
@@ -36,7 +36,7 @@ export default function NavBar() {
           key={input}
           to={`search-results/${input}`}
         >
-          <button className="searchButton">search</button>
+          <button className="material-icons searchButton">search</button>
         </Link>
       </form>
       <div className="dropdown">

@@ -1,7 +1,7 @@
-/*css attempt*/
+/*menu animation css*/
 body {
   overflow: hidden;
-  background: #212121;
+  background-color: #fff2cc;
 }
 .menuInput {
   position: absolute;
@@ -19,9 +19,9 @@ body {
 .menu {
   margin: 0 auto;
   position: absolute;
-  top: 50%;
+  top: 47%;
   left: 50%;
-  margin-left: -25px;
+  margin-left: -39px;
   margin-top: -25px;
 }
 
@@ -34,13 +34,18 @@ body {
   cursor: pointer;
 }
 
+.material-icons.md-36:hover {
+  transform: scale(1.15);
+}
+
 .material-icons.md-36 {
   font-size: 36px;
   color: green;
 }
 
 .btn {
-  background: #eceff1;
+  background-color: rgb(235, 195, 64);
+  color: green;
   font-size: 15px;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -183,15 +188,4 @@ body {
 .menuInput#toggle:checked ~ #show-menu .btn .closeBtn {
   transform: translateY(0px);
   opacity: 1;
-}
-
-.footer {
-  margin-top: 1rem;
-  padding: 1rem;
-  background-color: rgb(235, 195, 64);
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  text-align: center;
 }
