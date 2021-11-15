@@ -13,10 +13,6 @@
   padding-top: 30px;
 }
 
-.card-footer {
-  background-color: white;
-}
-
 .glovo {
   background-color: rgb(235, 195, 64);
   color: green;
@@ -34,20 +30,42 @@
   border-radius: 10px;
   box-shadow: rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
 }
-
+/*
 .box {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
-  margin-bottom: 15%;
-  justify-content: center;
-  margin-top: 15px;
+  grid-gap: 10px;
+  grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
   margin-left: 150px;
   margin-right: 150px;
-  grid-auto-flow: dense;
+  margin-top: 3%;
+  margin-bottom: 15%;
 }
+*/
 
 .card-text {
   font-weight: lighter;
+}
+
+.my-masonry-grid {
+  display: -webkit-box; /* Not needed if autoprefixing */
+  display: -ms-flexbox; /* Not needed if autoprefixing */
+  display: flex;
+  margin-left: 70px; /* gutter size offset */
+  width: auto;
+  margin-top: 30px;
+  margin-right: 100px;
+  margin-bottom: 100px;
+}
+.my-masonry-grid_column {
+  padding-left: 5px; /* gutter size */
+  background-clip: padding-box;
+}
+
+/* Style your items */
+.my-masonry-grid_column > div {
+  /* change div to reference your elements you put in <Masonry> */
+
+  margin-bottom: 10px;
 }
 
 .restaurantsHeader {

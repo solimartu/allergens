@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-
+import Masonry from "react-masonry-css";
 import { useParams } from "react-router-dom";
 import "./Restaurants.css";
 
@@ -36,6 +36,13 @@ export default function AllRestaurants() {
     setAllRestaurants(sorted);
   };
 
+  const breakpointColumnsObj = {
+    default: 4,
+    1100: 3,
+    700: 2,
+    500: 1,
+  };
+
   return (
     <div>
       <div className="resultsTitle">Showing results for {input}...</div>
@@ -62,24 +69,28 @@ export default function AllRestaurants() {
         </div>
       </div>
       {allRestaurants.length !== 0 ? (
-        <div className="box header">
+        <Masonry
+          breakpointCols={breakpointColumnsObj}
+          className="my-masonry-grid"
+          columnClassName="my-masonry-grid_column"
+        >
           {allRestaurants.map((restaurant) => (
-            <div className="card-deck">
-              <div className="card" style={{ height: "13rem" }}>
+            <div>
+              <div className="card grid-item">
                 <img
-                  class="card-img"
+                  className="card-img-top"
                   src={restaurant.imgLink}
                   alt="Card image cap"
                 />
-                <div className="card-img-overlay">
-                  <div className="card-body">
-                    <h4 className="card-title">{restaurant.restaurant}</h4>
-                    <div className="card-text">
-                      <div className="allergyLink">
-                        <a href={restaurant.allergyMenu}>
-                          <button className="allergy">Allergy Menu</button>
-                        </a>
-                      </div>
+
+                <div className="card-body">
+                  <h4 className="card-title">{restaurant.restaurant}</h4>
+                  <div className="card-text">
+                    <div className="allergyLink">
+                      <a href={restaurant.allergyMenu}>
+                        <button className="allergy">Allergy Menu</button>
+                      </a>
+
                       <div className="text-muted">
                         <div className="material-icons"> thumb_up </div>
                         {restaurant.glovoRating * 100}%{" "}
@@ -99,7 +110,7 @@ export default function AllRestaurants() {
               </div>
             </div>
           ))}
-        </div>
+        </Masonry>
       ) : (
         <div className="loading">
           <div className="material-icons">restaurant</div>

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import "./Restaurants.css";
+import Masonry from "react-masonry-css";
 
 export default function Restaurants() {
   let [restaurants, setRestaurants] = useState([]);
@@ -46,6 +47,13 @@ export default function Restaurants() {
     setRestaurants(sorted);
   };
 
+  const breakpointColumnsObj = {
+    default: 4,
+    1100: 3,
+    700: 2,
+    500: 1,
+  };
+
   return (
     <div>
       <div className="sort">
@@ -77,24 +85,28 @@ export default function Restaurants() {
           </div>
         ))}
 
-        <div className="box">
+        <Masonry
+          breakpointCols={breakpointColumnsObj}
+          className="my-masonry-grid"
+          columnClassName="my-masonry-grid_column"
+        >
           {restaurants.map((restaurant) => (
-            <div className="card-deck">
-              <div className="card" style={{ height: "13rem" }}>
+            <div>
+              <div className="card grid-item">
                 <img
-                  class="card-img"
+                  className="card-img-top"
                   src={restaurant.imgLink}
                   alt="Card image cap"
                 />
-                <div className="card-img-overlay">
-                  <div className="card-body">
-                    <h4 className="card-title">{restaurant.restaurant}</h4>
-                    <div className="card-text">
-                      <div className="allergyLink">
-                        <a href={restaurant.allergyMenu}>
-                          <button className="allergy">Allergy Menu</button>
-                        </a>
-                      </div>
+
+                <div className="card-body">
+                  <h4 className="card-title">{restaurant.restaurant}</h4>
+                  <div className="card-text">
+                    <div className="allergyLink">
+                      <a href={restaurant.allergyMenu}>
+                        <button className="allergy">Allergy Menu</button>
+                      </a>
+
                       <div className="text-muted">
                         <div className="material-icons"> thumb_up </div>
                         {restaurant.glovoRating * 100}%{" "}
@@ -114,7 +126,7 @@ export default function Restaurants() {
               </div>
             </div>
           ))}
-        </div>
+        </Masonry>
       </div>
     </div>
   );
