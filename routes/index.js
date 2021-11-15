@@ -94,7 +94,8 @@ router.get("/restaurants/", async function (req, res) {
   }
 });
 
-//GET one restaurant by ID
+/*
+//GET one restaurant by ID // Don't use this now, but might have a use later?
 router.get("/restaurants/:id", async function (req, res) {
   const { id } = req.params;
   try {
@@ -105,6 +106,7 @@ router.get("/restaurants/:id", async function (req, res) {
     res.status(500).send(err);
   }
 });
+*/
 
 //DELETE one restaurant by ID
 router.delete("/restaurants/:id", async function (req, res, next) {

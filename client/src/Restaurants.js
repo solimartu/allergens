@@ -106,11 +106,10 @@ export default function Restaurants() {
                       <a href={restaurant.allergyMenu}>
                         <button className="allergy">Allergy Menu</button>
                       </a>
-
-                      <div className="text-muted">
-                        <div className="material-icons"> thumb_up </div>
-                        {restaurant.glovoRating * 100}%{" "}
-                      </div>
+                    </div>
+                    <div className="text-muted">
+                      <div className="material-icons"> thumb_up </div>
+                      {restaurant.glovoRating * 100}%{" "}
                     </div>
                   </div>
                 </div>
