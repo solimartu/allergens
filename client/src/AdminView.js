@@ -11,6 +11,7 @@ export default function AdminView() {
     uberEatsLink: "",
     glovoRating: null,
     uberEatsRating: null,
+    imgLink: null,
   });
   let [restaurant, setRestaurant] = useState(null);
   let [allRestaurants, setAllRestaurants] = useState([]);
@@ -148,7 +149,7 @@ export default function AdminView() {
             </div>
 
             <div className="form-group">
-              <label htmlFor="uberEatsRating">UberEatsRating</label>
+              <label htmlFor="uberEatsRating">UberEats Rating</label>
               <input
                 onChange={(e) => handleChange(e)}
                 value={input.uberEatsRating}
@@ -157,6 +158,16 @@ export default function AdminView() {
                 className="form-control"
               ></input>
             </div>
+          </div>
+          <div className="form-group">
+            <label htmlFor="imgLink">Image Link</label>
+            <input
+              onChange={(e) => handleChange(e)}
+              value={input.imgLink}
+              placeholder="imgLink"
+              name="imgLink"
+              className="form-control rInput"
+            ></input>
           </div>
           <button className="submitButton">Add Restaurant</button>
         </form>

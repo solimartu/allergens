@@ -31,11 +31,12 @@ router.post("/restaurants", async (req, res) => {
   const uberEatsLink = req.body.uberEatsLink;
   const glovoRating = req.body.glovoRating;
   const uberEatsRating = req.body.uberEatsRating;
+  const imgLink = req.body.imgLink;
 
   try {
     await db(
-      `INSERT INTO restaurants (restaurant, allergyMenu, typeOfFoodID, glovoLink, uberEatsLink, glovoRating, uberEatsRating) 
-      VALUES ("${restaurant}", "${allergyMenu}", ${typeOfFoodID}, "${glovoLink}", "${uberEatsLink}", ${glovoRating}, ${uberEatsRating});`
+      `INSERT INTO restaurants (restaurant, allergyMenu, typeOfFoodID, glovoLink, uberEatsLink, glovoRating, uberEatsRating, imgLink) 
+      VALUES ("${restaurant}", "${allergyMenu}", ${typeOfFoodID}, "${glovoLink}", "${uberEatsLink}", ${glovoRating}, ${uberEatsRating}, ${imgLink});`
     );
 
     const results = await db(

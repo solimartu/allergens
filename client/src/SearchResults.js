@@ -113,7 +113,7 @@ export default function AllRestaurants() {
         </Masonry>
       ) : (
         <div className="loading">
-          <div className="material-icons">restaurant</div>
+          <div className="material-icons">local_dining</div>
         </div>
       )}
     </div>

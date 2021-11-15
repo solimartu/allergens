@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # allergens
 
 ## Setup
@@ -28,3 +29,8 @@
 - In another terminal, do `cd client` and run `npm start` to start the client in development mode with hot reloading in port 3000
 
 _This is a student project that was created at [CodeOp](http://codeop.tech), a full stack development bootcamp in Barcelona._
+||||||| merged common ancestors
+# allergens
+=======
+# allergens
+>>>>>>> 863fab86e1179b5b49683f0d82d76a25a1e2719d
