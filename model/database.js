@@ -27,10 +27,12 @@ con.connect(function (err) {
       uberEatsLink varchar(255) NOT NULL,
       glovoRating DECIMAL(65) NOT NULL,
       uberEatsRating DECIMAL (65) NOT NULL,
+      imgLink varchar(255) NOT NULL,
       PRIMARY KEY (id)); 
       DROP TABLE if exists typeOfFoods; CREATE TABLE foodTypes (
     id INT(255) NOT NULL AUTO_INCREMENT,
     typeOfFood varchar(255) NOT NULL,
+    icon varchar(255) NOT NULL,
     PRIMARY KEY (id)
   );`;
 
