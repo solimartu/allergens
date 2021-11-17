@@ -34,7 +34,7 @@ con.connect(function (err) {
     typeOfFood varchar(255) NOT NULL,
     icon varchar(255) NOT NULL,
     PRIMARY KEY (id)
-  );`;
+  );CREATE TABLE users (userId INT AUTO_INCREMENT, username VARCHAR(15), email VARCHAR(255), password VARCHAR(255), PRIMARY KEY (userId));`;
 
   con.query(sql, function (err, result) {
     if (err) throw err;
