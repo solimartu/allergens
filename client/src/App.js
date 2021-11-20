@@ -7,6 +7,7 @@ import AllRestaurants from "./AllRestaurants.js";
 import SearchResults from "./SearchResults.js";
 import NavBar from "./NavBar";
 import Footer from "./Footer";
+import Login from "./components/Login";
 
 function App() {
   return (
@@ -17,7 +18,7 @@ function App() {
         <Routes>
           <Route path="/" element={<UserView />} />
           <Route path="allRestaurants" element={<AllRestaurants />} />
-
+          <Route path="users/login" element={<Login />} />
           <Route
             path="*"
             element={<p className="card"> there's nothing here </p>}

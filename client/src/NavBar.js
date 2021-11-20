@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import "./App.css";
+import Login from "./components/Login";
 
 export default function NavBar() {
   let [input, setInput] = useState("");
@@ -39,6 +40,9 @@ export default function NavBar() {
           <button className="material-icons searchButton">search</button>
         </Link>
       </form>
+      {/* <Login to="/users/login">
+        <button className="homeButton">Log in</button>
+      </Login> */}
       <div className="dropdown">
         <button className="dropbtn">VIEW</button>
         <div className="dropdown-content">

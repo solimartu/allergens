@@ -12,9 +12,11 @@ export default function AdminView() {
     glovoRating: null,
     uberEatsRating: null,
     imgLink: null,
+    address: "",
   });
   let [restaurant, setRestaurant] = useState(null);
   let [allRestaurants, setAllRestaurants] = useState([]);
+  let [foodTypes, setFoodTypes] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -23,11 +25,20 @@ export default function AdminView() {
       setAllRestaurants(allRestaurants);
     };
     fetchData();
+    getFoodTypes();
   }, []);
+
+  const getFoodTypes = () => {
+    fetch("/foodtypes")
+      .then((response) => response.json())
+      .then((foodtypes) => setFoodTypes(foodtypes))
+      .catch((error) => setError(error));
+  };
 
   const handleChange = (event) => {
     const value = event.target.value;
-    setInput({ ...input, [event.target.name]: value });
+    const name = event.target.name;
+    setInput({ ...input, [name]: value });
   };
 
   const handleSubmit = (event) => {
@@ -91,6 +102,16 @@ export default function AdminView() {
               className="form-control rInput"
             ></input>
           </div>
+          <div className="form-group">
+            <label htmlFor="restaurant">Address</label>
+            <input
+              onChange={(e) => handleChange(e)}
+              value={input.address}
+              placeholder="Carrer de ..."
+              name="address"
+              className="form-control rInput"
+            ></input>
+          </div>
           <div className="d-flex">
             <div className="form-group">
               <label htmlFor="allergyMenu">Link to Allergy Menu</label>
@@ -103,7 +124,23 @@ export default function AdminView() {
               ></input>
             </div>
             <div className="form-group">
-              <label htmlFor="typeOfFoodID">Type of Food ID</label>
+              <label htmlFor="typeOfFoodID">Type of Food</label>
+              Here modify for a multi select{" "}
+              <div class="form-group">
+                {" "}
+                multi
+                <label for=""></label>
+                <select
+                  multiple
+                  class="form-control"
+                  name="foodtype_id"
+                  id="foodtype_id"
+                >
+                  <option>Vegan</option>
+                  <option>Burgers</option>
+                  <option>Italian</option>
+                </select>
+              </div>
               <input
                 onChange={(e) => handleChange(e)}
                 value={input.typeOfFoodID}

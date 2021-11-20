@@ -1,6 +1,6 @@
 var express = require("express");
 var router = express.Router();
-const db = require("../model/helper");
+// const db = require("../model/helper");
 
 /* GET home page. */
 router.get("/", function (req, res, next) {
@@ -49,16 +49,7 @@ router.post("/restaurants", async (req, res) => {
   }
 });
 
-// GET foodTypes list
-router.get("/foodTypes", function (req, res) {
-  db("SELECT * FROM foodTypes;")
-    .then((results) => {
-      res.send(results.data);
-    })
-    .catch((err) => res.status(500).send(err));
-});
-
-// GET typeOfFood by id
+// GET typeOfFood by id tendria que ir a typefood
 router.get("/foodTypes/:id", async function (req, res) {
   const { id } = req.params;
   try {
@@ -69,7 +60,7 @@ router.get("/foodTypes/:id", async function (req, res) {
   }
 });
 
-// GET list of restaurants
+// GET list of restaurants - ya no lo necesito porque tengo un endpoint para restaurants PERO creo que necesito los RAW para queries
 router.get("/restaurants/", async function (req, res) {
   let restaurant = req.query.name;
   let typeOfFood = req.query.typeOfFood;
@@ -94,7 +85,6 @@ router.get("/restaurants/", async function (req, res) {
   }
 });
 
-/*
 //GET one restaurant by ID // Don't use this now, but might have a use later?
 router.get("/restaurants/:id", async function (req, res) {
   const { id } = req.params;
@@ -102,19 +92,6 @@ router.get("/restaurants/:id", async function (req, res) {
     console.log("here");
     const results = await db(`SELECT * FROM restaurants WHERE id = ${id}`);
     res.status(200).send(results.data);
-  } catch (err) {
-    res.status(500).send(err);
-  }
-});
-*/
-
-//DELETE one restaurant by ID
-router.delete("/restaurants/:id", async function (req, res, next) {
-  try {
-    const { id } = req.params;
-    await db(`DELETE FROM restaurants WHERE id=${id}`);
-    const results = await db(`SELECT * FROM restaurants`);
-    res.send(results.data);
   } catch (err) {
     res.status(500).send(err);
   }
