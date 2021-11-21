@@ -23,15 +23,15 @@
 }
 
 .adminForm {
-  height: 475px;
+  /* height: 475px; */
   background-color: rgb(235, 195, 64);
-  width: 500px;
+  /* width: 500px; */
   border-radius: 25px;
 }
 
 .submitButton {
-  margin-left: 175px;
-  margin-top: 20px;
+  /* margin-left: 175px;
+  margin-top: 20px; */
   color: green;
   background-color: rgb(235, 195, 64);
 
@@ -83,7 +83,8 @@ label {
 
 .form-group {
   padding-top: 10px;
-  padding-left: 25px;
+  padding-left: 10px;
+  padding-right: 10px;
 }
 
 .rInput {

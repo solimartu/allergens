@@ -1,53 +1,95 @@
 import React, { useState, useEffect } from "react";
 
 import "./AdminView.css";
+import Restaurants from "./Restaurants";
 
 export default function AdminView() {
   let [input, setInput] = useState({
     restaurant: "",
-    allergyMenu: "",
-    typeOfFoodID: null,
-    glovoLink: "",
-    uberEatsLink: "",
-    glovoRating: null,
-    uberEatsRating: null,
-    imgLink: null,
     address: "",
+    allergyMenu: "",
+    imgLink: null,
+    glovoLink: "",
+    glovoRating: null,
+    uberEatsLink: "",
+    uberEatsRating: null,
+    typeOfFood: [],
+    typeOfAllergy: [],
+    deliveryServices: [],
   });
-  let [restaurant, setRestaurant] = useState(null);
+  let [restaurante, setRestaurante] = useState(null);
   let [allRestaurants, setAllRestaurants] = useState([]);
   let [foodTypes, setFoodTypes] = useState([]);
+  let [allergyTypes, setAllergyTypes] = useState([]);
+  let [deliveryServices, setDeliveryServices] = useState([]);
+  let [error, setError] = useState(null);
+
+  // const onMultipleSelection = () => {
+  //   const
+  //   setRestFoodtypes((state) => ({
+  //     ...state, restaurantId: restaurants.id, FoodtypeId:
+  //   }))
+  // }
+
+  const {
+    restaurant,
+    allergyMenu,
+    typeOfFoodID,
+    glovoLink,
+    uberEatsLink,
+    glovoRating,
+    uberEatsRating,
+    imgLink,
+    address,
+  } = input;
 
   useEffect(() => {
-    const fetchData = async () => {
-      const response = await fetch(`/restaurants`);
-      const allRestaurants = await response.json();
-      setAllRestaurants(allRestaurants);
-    };
     fetchData();
     getFoodTypes();
+    getAllergyTypes();
+    getDeliveryServices();
   }, []);
+
+  const fetchData = async () => {
+    const response = await fetch(`/restaurants`);
+    const allRestaurants = await response.json();
+    setAllRestaurants(allRestaurants);
+  };
 
   const getFoodTypes = () => {
     fetch("/foodtypes")
       .then((response) => response.json())
-      .then((foodtypes) => setFoodTypes(foodtypes))
-      .catch((error) => setError(error));
+      .then((foodtypes) => setFoodTypes(foodtypes));
+    // .catch((error) => setError(error));
+  };
+
+  const getAllergyTypes = () => {
+    fetch("/allergytypes")
+      .then((response) => response.json())
+      .then((allergytypes) => setAllergyTypes(allergytypes));
+    // .catch((error) => setError(error));
+  };
+
+  const getDeliveryServices = () => {
+    fetch("/deliveryservices")
+      .then((response) => response.json())
+      .then((deliveryservices) => setDeliveryServices(deliveryservices));
+    // .catch((error) => setError(error));
   };
 
   const handleChange = (event) => {
     const value = event.target.value;
     const name = event.target.name;
-    setInput({ ...input, [name]: value });
+    setInput({ ...input, [name]: value }); //
   };
 
   const handleSubmit = (event) => {
-    //event.preventDefault();
     addRestaurant();
   };
 
   //doesn't update the table until the page refreshes
   const addRestaurant = async () => {
+    //event.preventDefault();
     try {
       const res = await fetch("/restaurants", {
         method: "POST",
@@ -55,19 +97,19 @@ export default function AdminView() {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          restaurant: input.restaurant,
-          allergyMenu: input.allergyMenu,
-          typeOfFoodID: input.typeOfFoodID,
-          glovoLink: input.glovoLink,
-          uberEatsLink: input.uberEatsLink,
-          glovoRating: input.glovoRating,
-          uberEatsRating: input.uberEatsRating,
+          restaurant,
+          allergyMenu,
+          typeOfFoodID,
+          glovoLink,
+          uberEatsLink,
+          glovoRating,
+          uberEatsRating,
         }),
       });
 
       setInput("");
-      const restaurant = await res.json();
-      setRestaurant(restaurant);
+      const data = await res.json();
+      setRestaurante(data);
     } catch (err) {
       console.log(err);
     }
@@ -87,133 +129,168 @@ export default function AdminView() {
 
   return (
     <div>
-      <div className="adminContainer">
+      <div className="adminContainer p-2">
         <form className="adminForm" onSubmit={(e) => handleSubmit(e)}>
           <div>
             <h5 className="adminHeader">Add Restaurant to Database</h5>
           </div>
-          <div className="form-group">
-            <label htmlFor="restaurant">Restaurant Name</label>
-            <input
-              onChange={(e) => handleChange(e)}
-              value={input.restaurant}
-              placeholder="restaurant"
-              name="restaurant"
-              className="form-control rInput"
-            ></input>
-          </div>
-          <div className="form-group">
-            <label htmlFor="restaurant">Address</label>
-            <input
-              onChange={(e) => handleChange(e)}
-              value={input.address}
-              placeholder="Carrer de ..."
-              name="address"
-              className="form-control rInput"
-            ></input>
+          <div className="d-flex">
+            <div className="form-group col-6">
+              <label htmlFor="restaurant">Restaurant Name</label>
+              <input
+                onChange={(e) => handleChange(e)}
+                value={restaurant}
+                placeholder="restaurant"
+                name="restaurant"
+                className="form-control"
+              ></input>
+            </div>
+            <div className="form-group col-6">
+              <label htmlFor="address">Address</label>
+              <input
+                onChange={(e) => handleChange(e)}
+                value={address}
+                placeholder="Carrer de ..."
+                name="address"
+                className="form-control"
+              ></input>
+            </div>
           </div>
           <div className="d-flex">
-            <div className="form-group">
+            <div className="form-group col-6">
               <label htmlFor="allergyMenu">Link to Allergy Menu</label>
               <input
                 onChange={(e) => handleChange(e)}
-                value={input.allergyMenu}
+                value={allergyMenu}
                 placeholder="allergyMenu"
                 name="allergyMenu"
                 className="form-control"
               ></input>
             </div>
-            <div className="form-group">
-              <label htmlFor="typeOfFoodID">Type of Food</label>
-              Here modify for a multi select{" "}
-              <div class="form-group">
-                {" "}
-                multi
-                <label for=""></label>
-                <select
-                  multiple
-                  class="form-control"
-                  name="foodtype_id"
-                  id="foodtype_id"
-                >
-                  <option>Vegan</option>
-                  <option>Burgers</option>
-                  <option>Italian</option>
-                </select>
-              </div>
+            <div className="form-group col-6">
+              <label htmlFor="imgLink">Image Link</label>
               <input
                 onChange={(e) => handleChange(e)}
-                value={input.typeOfFoodID}
-                placeholder="typeOfFoodID"
-                name="typeOfFoodID"
+                value={imgLink}
+                placeholder="imgLink"
+                name="imgLink"
                 className="form-control"
               ></input>
             </div>
           </div>
           <div className="d-flex">
-            <div className="form-group">
+            <div className="form-group col-8">
               <label htmlFor="glovoLink">Link to Glovo</label>
               <input
                 onChange={(e) => handleChange(e)}
-                value={input.glovoLink}
+                value={glovoLink}
                 placeholder="glovoLink"
                 name="glovoLink"
                 className="form-control"
               ></input>
             </div>
 
-            <div className="form-group">
-              <label htmlFor="uberEatsLink">Link to UberEats</label>
-              <input
-                onChange={(e) => handleChange(e)}
-                value={input.uberEatsLink}
-                placeholder="uberEatsLink"
-                name="uberEatsLink"
-                className="form-control"
-              ></input>
-            </div>
-          </div>
-          <div className="d-flex">
-            <div className="form-group">
+            <div className="form-group col-4">
               <label htmlFor="glovoRating">Glovo Rating</label>
               <input
                 onChange={(e) => handleChange(e)}
-                value={input.glovoRating}
+                value={glovoRating}
                 placeholder="glovoRating"
                 name="glovoRating"
                 className="form-control"
               ></input>
             </div>
+          </div>
+          <div className="d-flex">
+            <div className="form-group col-8">
+              <label htmlFor="uberEatsLink">Link to UberEats</label>
+              <input
+                onChange={(e) => handleChange(e)}
+                value={uberEatsLink}
+                placeholder="uberEatsLink"
+                name="uberEatsLink"
+                className="form-control"
+              ></input>
+            </div>
 
-            <div className="form-group">
+            <div className="form-group col-4">
               <label htmlFor="uberEatsRating">UberEats Rating</label>
               <input
                 onChange={(e) => handleChange(e)}
-                value={input.uberEatsRating}
+                value={uberEatsRating}
                 placeholder="uberEatsRating"
                 name="uberEatsRating"
                 className="form-control"
               ></input>
             </div>
           </div>
-          <div className="form-group">
-            <label htmlFor="imgLink">Image Link</label>
-            <input
-              onChange={(e) => handleChange(e)}
-              value={input.imgLink}
-              placeholder="imgLink"
-              name="imgLink"
-              className="form-control rInput"
-            ></input>
+          <div className="d-flex">
+            <div className="form-group col-4">
+              <label htmlFor="foodTypes">Type of Food</label>
+              <select
+                multiple
+                class="form-control"
+                name="foodTypes"
+                id="foodTypes"
+                value={foodTypes}
+                // onMultipleSelection={()=> }
+              >
+                {foodTypes.map((foodtype) => (
+                  <option key={foodtype.id}>{foodtype.typeOfFood}</option>
+                ))}
+              </select>
+              {/* <input
+                onChange={(e) => handleChange(e)}
+                value={input.typeOfFoodID}
+                placeholder="typeOfFoodID"
+                name="typeOfFoodID"
+                className="form-control"
+              ></input> */}
+            </div>
+
+            <div class="form-group col-4">
+              <label htmlFor="allergyTypes">Type of Allergies</label>
+              <select
+                multiple
+                class="form-control"
+                name="allergyTypes"
+                id="allergyTypes"
+                value={allergyTypes}
+              >
+                {allergyTypes.map((allergytype) => (
+                  <option key={allergytype.id}>
+                    {allergytype.typeOfAllergy}
+                  </option>
+                ))}
+              </select>
+            </div>
+            <div class="form-group col-4">
+              <label htmlFor="deliveryServices">Delivery Services</label>
+              <select
+                multiple
+                class="form-control"
+                name="deliveryServices"
+                id="deliveryServices"
+                value={deliveryServices}
+              >
+                {deliveryServices.map((deliveryservice) => (
+                  <option key={deliveryservice.id}>
+                    {deliveryservice.name}
+                  </option>
+                ))}
+              </select>
+            </div>
           </div>
-          <button className="submitButton">Add Restaurant</button>
+          <div className="d-flex justify-content-center">
+            <button className="submitButton mt-2 mb-2">Add Restaurant</button>
+          </div>
         </form>
 
         <div className="table-wrapper-scroll-y my-custom-scrollbar adminBox">
           <table className="table table-striped mb-0">
             <thead>
               <tr>
-                <th scope="col">id</th>
+                <th scope="col">Id</th>
                 <th scope="col">Restaurant Name</th>
               </tr>
             </thead>
@@ -244,7 +321,7 @@ export default function AdminView() {
           </table>
         </div>
       </div>
-      {restaurant ? `${restaurant.restaurant} was added correctly` : ""}
+      {restaurante ? `${restaurante.restaurant} was added correctly` : ""}
     </div>
   );
 }

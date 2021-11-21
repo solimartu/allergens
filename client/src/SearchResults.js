@@ -2,6 +2,12 @@ import React, { useEffect, useState } from "react";
 import Masonry from "react-masonry-css";
 import { useParams } from "react-router-dom";
 import "./Restaurants.css";
+// import {
+//   Dropdown,
+//   DropdownToggle,
+//   DropdownMenu,
+//   DropdownItem,
+// } from "react-bootstrap";
 
 export default function AllRestaurants() {
   let [allRestaurants, setAllRestaurants] = useState([]);
@@ -46,6 +52,7 @@ export default function AllRestaurants() {
   return (
     <div>
       <div className="resultsTitle">Showing results for {input}...</div>
+
       <div className="sort">
         <div className="dropdown2">
           <button className="dropbtn2">SORT BY</button>

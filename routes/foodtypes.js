@@ -3,14 +3,37 @@ var router = express.Router();
 var models = require("../models");
 
 //or GET all the foodtypes WORKING
-// router.get("/", async function (req, res) {
-//   try {
-//     const foodtypes = await models.FoodType.findAll();
-//     res.send(foodtypes);
-//   } catch (error) {
-//     res.status(500).send(error);
-//   }
-// });
+router.get("/", async function (req, res) {
+  try {
+    const foodtypes = await models.FoodType.findAll();
+    res.send(foodtypes);
+  } catch (error) {
+    res.status(500).send(error);
+  }
+});
+
+//the restaurants divided by type of food ME LO DA TRIPLICADO (?)
+router.get("/:id/restaurants", function (req, res) {
+  const { id } = req.params;
+
+  models.FoodType.findOne({
+    where: {
+      id,
+    },
+    // include: models.Restaurant,
+  })
+    .then((foodtype) => {
+      foodtype
+        .getRestaurants({ attributes: ["restaurant"] })
+        .then((restaurants) => res.send(restaurants))
+        .catch((error) => {
+          res.status(500).send(error);
+        });
+    })
+    .catch((error) => {
+      res.status(500).send(error);
+    });
+});
 
 //get all with the restaurants inside, but idk if it is what i need
 router.get("/", async function (req, res) {

@@ -40,10 +40,11 @@ router.post("/login", async (req, res) => {
     );
     const user = results.data[0];
     if (user) {
-      const userId = user.userId;
+      const user_id = user.id;
       const correctPassword = await bcrypt.compare(password, user.password);
       if (!correctPassword) throw new Error("Incorrect password");
-      var token = jwt.sign({ userId }, supersecret);
+      //i create a new token with the username and id
+      var token = jwt.sign({ user_id }, supersecret);
       res.send({ message: "Login successful, here is your token", token });
     } else {
       throw new Error("User does not exist");
@@ -53,10 +54,11 @@ router.post("/login", async (req, res) => {
   }
 });
 
-//GET the profile
+//GET the profile --protected data
 router.get("/profile", userShouldBeLoggedIn, function (req, res, next) {
+  //select * from favourites where user_id = req.user_id
   res.send({
-    message: "Here is the PROTECTED data for user " + req.userId,
+    message: "Here is the PROTECTED data for user " + req.user_id,
   });
 });
 

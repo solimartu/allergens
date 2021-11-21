@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import axios from "axios";
+import axios from "axios"; //library like fetch but better.. it throws an error, detects is sth is json or not
 
 function Login() {
   const [credentials, setCredentials] = useState({
@@ -37,7 +37,7 @@ function Login() {
     try {
       const { data } = await axios("/users/profile", {
         headers: {
-          authorization: "Bearer " + localStorage.getItem("token"),
+          authorization: `Bearer ${localStorage.getItem("token")}`,
         },
       });
 
@@ -74,7 +74,7 @@ function Login() {
       <div className="text-center p-4">
         {" "}
         /* i want to understand better this*/
-        <button className=" btn btn-outline-primary" onClick={requestData}>
+        <button className=" btn" onClick={requestData}>
           Request protected data
         </button>
         ask if forgot password

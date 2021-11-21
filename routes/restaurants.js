@@ -13,19 +13,19 @@ router.get("/", async function (req, res) {
   }
 });
 
-router.get("/", async function (req, res) {
-  // const { typeOfFood, typeOfAllergy } = req.query;
-  try {
-    const restaurants = await models.Restaurant.findAll({
-      where: {
-        foodTypeId: 5,
-      },
-    }); // idem a SELECT * FROM restaurants;
-    res.send(restaurants);
-  } catch (error) {
-    res.status(500).send(error);
-  }
-});
+// router.get("/", async function (req, res) {
+//   // const { typeOfFood, typeOfAllergy } = req.query;
+//   try {
+//     const restaurants = await models.Restaurant.findAll({
+//       where: {
+//         foodTypeId: 5,
+//       },
+//     }); // idem a SELECT * FROM restaurants;
+//     res.send(restaurants);
+//   } catch (error) {
+//     res.status(500).send(error);
+//   }
+// });
 
 //GET ONE restaurant by id WORKING
 router.get("/:id", async function (req, res) {
@@ -40,6 +40,19 @@ router.get("/:id", async function (req, res) {
     res.status(500).send(error);
   }
 });
+
+// router.get("/", function (req, res) {
+//   models.Restaurant.findAll({
+//     where: {
+//       FoodtypeId: 1,
+//       [Op.and]: { AllergyType: 1 },
+//     },
+//   })
+//     .then((data) => res.send(data))
+//     .catch((error) => {
+//       res.status(500).send(error);
+//     });
+// });
 
 //see if it is the same for me or not... post a many to many
 router.post("/", async (req, res) => {
@@ -67,7 +80,7 @@ router.post("/", async (req, res) => {
       address,
       allergyMenu,
     });
-    if (typeOfFood) await Restaurant.setFoodType(typeOfFood);
+    if (typeOfFood) await setFoodType.setFoodType(typeOfFood);
     if (typeOfAllergy) await Restaurant.setAllergyType(typeOfAllergy);
     if (name) await Restaurant.setDeliveryService(name);
     res.status(201).send(result);
@@ -75,6 +88,13 @@ router.post("/", async (req, res) => {
     res.status(500).send(error);
   }
 });
+
+// router.post("/", async function (req, res) => {
+//   try {
+//     const resto = await Restaurant.setFoodType()
+
+//   }
+// })
 
 //OLD SCHOOL
 //DELETE one restaurant by ID NOT WORKING

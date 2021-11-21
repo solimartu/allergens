@@ -17,6 +17,7 @@ export default function UserView() {
 
   return (
     <div>
+      <div></div>
       <div className="menu">
         <input className="menuInput" type="checkbox" id="toggle" />
         <label id="show-menu" for="toggle">

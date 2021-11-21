@@ -118,13 +118,13 @@ body {
 }
 
 .menuInput#toggle:checked ~ #show-menu .btn:nth-child(2) {
-  top: -150px;
+  top: -134px;
   opacity: 1;
   -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=100)";
 }
 
 .menuInput#toggle:checked ~ #show-menu .btn:nth-child(3) {
-  top: -100px;
+  top: -84px;
   left: 100px;
   opacity: 1;
   -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=100)";
@@ -137,20 +137,20 @@ body {
 }
 
 .menuInput#toggle:checked ~ #show-menu .btn:nth-child(5) {
-  top: 100px;
+  top: 114px;
   left: 100px;
   opacity: 1;
   -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=100)";
 }
 
 .menuInput#toggle:checked ~ #show-menu .btn:nth-child(6) {
-  top: 150px;
+  top: 164px;
   opacity: 1;
   -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=100)";
 }
 
 .menuInput#toggle:checked ~ #show-menu .btn:nth-child(7) {
-  top: 100px;
+  top: 114px;
   left: -100px;
   opacity: 1;
   -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=100)";
@@ -163,7 +163,7 @@ body {
 }
 
 .menuInput#toggle:checked ~ #show-menu .btn:nth-child(9) {
-  top: -100px;
+  top: -84px;
   left: -100px;
   opacity: 1;
   -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=100)";

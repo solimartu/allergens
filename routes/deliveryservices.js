@@ -2,10 +2,33 @@ var express = require("express");
 var router = express.Router();
 var models = require("../models");
 
-//
+//GET all the delivery services WORKING
 router.get("/", function (req, res) {
-  models.DeliveryService.findAll({ include: models.Restaurant })
+  models.DeliveryService.findAll()
     .then((data) => res.send(data))
+    .catch((error) => {
+      res.status(500).send(error);
+    });
+});
+
+//the restaurants divided by delivery service
+router.get("/:id/restaurants", function (req, res) {
+  const { id } = req.params;
+
+  models.DeliveryService.findOne({
+    where: {
+      id,
+    },
+    // include: models.Restaurant,
+  })
+    .then((deliveryservice) => {
+      deliveryservice
+        .getRestaurants()
+        .then((restaurants) => res.send(restaurants))
+        .catch((error) => {
+          res.status(500).send(error);
+        });
+    })
     .catch((error) => {
       res.status(500).send(error);
     });
@@ -39,6 +62,7 @@ router.get("/search", function (req, res) {
     });
 });
 
+//GET delivery service by ID (?)
 router.get("/:id", function (req, res) {
   const { id } = req.params;
   models.DeliveryService.findOne({
@@ -48,28 +72,6 @@ router.get("/:id", function (req, res) {
     include: models.Restaurant,
   })
     .then((data) => res.send(data))
-    .catch((error) => {
-      res.status(500).send(error);
-    });
-});
-
-router.get("/:id/restaurants", function (req, res) {
-  const { id } = req.params;
-
-  models.DeliveryService.findOne({
-    where: {
-      id,
-    },
-    // include: models.Restaurant,
-  })
-    .then((deliveryservice) => {
-      deliveryservice
-        .getRestaurants()
-        .then((restaurants) => res.send(restaurants))
-        .catch((error) => {
-          res.status(500).send(error);
-        });
-    })
     .catch((error) => {
       res.status(500).send(error);
     });
