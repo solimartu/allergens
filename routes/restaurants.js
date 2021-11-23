@@ -69,6 +69,7 @@ router.get("/:id", async function (req, res) {
 });
 
 router.post("/", async (req, res) => {
+  console.log(req.body);
   try {
     const {
       restaurant,

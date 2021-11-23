@@ -51,6 +51,7 @@ export default function AdminView() {
   const fetchData = async () => {
     const response = await fetch(`/restaurants`);
     const allRestaurants = await response.json();
+    console.log(allRestaurants);
     setAllRestaurants(allRestaurants);
   };
 
@@ -116,26 +117,43 @@ export default function AdminView() {
 
   //doesn't update the table until the page refreshes
   const addRestaurant = async () => {
+    console.log(
+      restaurant,
+      allergyMenu,
+      glovoLink,
+      uberEatsLink,
+      glovoRating,
+      uberEatsRating,
+      typeOfFood,
+      typeOfAllergy,
+      name
+    );
     try {
       const res = await fetch("/restaurants", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({
-          restaurant,
-          allergyMenu,
-          glovoLink,
-          uberEatsLink,
-          glovoRating,
-          uberEatsRating,
-          typeOfFood,
-          typeOfAllergy,
-          name,
-        }),
+        body: JSON.stringify(
+          input
+          //   {
+          //   restaurant,
+          //   allergyMenu,
+          //   glovoLink,
+          //   uberEatsLink,
+          //   glovoRating,
+          //   uberEatsRating,
+          //   typeOfFood,
+          //   typeOfAllergy,
+          //   name,
+          // }
+        ),
       });
 
       const data = await res.json();
+      console.log(data);
+      // setAllRestaurants(data);
+      fetchData();
     } catch (err) {
       console.log(err);
     }
@@ -147,7 +165,8 @@ export default function AdminView() {
         method: "DELETE",
       });
       const data = await res.json();
-      setAllRestaurants(data);
+      // setAllRestaurants(data);
+      fetchData();
     } catch (err) {
       console.log(err);
     }
