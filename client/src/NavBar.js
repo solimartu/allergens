@@ -30,7 +30,7 @@ export default function NavBar() {
           className="pl-2 input"
           name="restaurant"
           value={input}
-          placeholder="search..."
+          placeholder="Search..."
           aria-label="Search"
         ></input>
         <Link
@@ -52,14 +52,14 @@ export default function NavBar() {
             {" "}
             <div className="dropdown-item">ADMIN VIEW </div>
           </Link>
-          <Link style={{ textDecoration: "none" }} to="/">
+          <Link style={{ textDecoration: "none" }} to="userView">
             {" "}
             <div className="dropdown-item">USER VIEW </div>
           </Link>
         </div>
       </div>
       <Link style={{ textDecoration: "none" }} to="/login">
-        <button className="homeButton">LogIn</button>
+        <button className="homeButton">Log In</button>
       </Link>
     </div>
   );

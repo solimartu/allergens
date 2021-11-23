@@ -185,6 +185,7 @@ body {
 .closeBtn {
   position: absolute;
   transition: all 0.3s ease;
+  margin-top: 0px !important;
 }
 
 .closeBtn {
@@ -203,7 +204,7 @@ body {
 }
 .cartel {
   position: relative;
-  top: 250px;
+  top: 244px;
   padding: 15px 20px;
   left: -133px;
   font-weight: 600;
@@ -222,4 +223,12 @@ body {
 .rounded-left {
   border-top-left-radius: 0.25rem;
   border-bottom-left-radius: 0.25rem;
+}
+
+.cartel2 {
+  position: relative;
+  top: 252px;
+  padding: 15px 20px;
+  left: -102px;
+  font-weight: 600;
 }

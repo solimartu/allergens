@@ -322,7 +322,7 @@ export default function AdminView() {
             </div>
           </div>
           <div className="d-flex justify-content-center">
-            <button className="submitButton mt-2 mb-2">Add Restaurant</button>
+            <button className="submitButton mt-3 mb-3">Add Restaurant</button>
           </div>
         </form>
 

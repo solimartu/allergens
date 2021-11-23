@@ -24,7 +24,7 @@
 
 .adminForm {
   /* height: 475px; */
-  background-color: rgb(235, 195, 64);
+  background-color: #ffc244;
   /* width: 500px; */
   border-radius: 25px;
 }
@@ -32,9 +32,9 @@
 .submitButton {
   /* margin-left: 175px;
   margin-top: 20px; */
-  color: green;
-  background-color: rgb(235, 195, 64);
-
+  color: #ffffff;
+  background-color: #00a082;
+  margin-bottom: 0.5rem;
   font-size: 15px;
   font-weight: bold;
   border: none;
@@ -46,27 +46,27 @@
 
 .submitButton:hover {
   transform: scale(1.1);
-  color: rgb(235, 195, 64);
-  background-color: green;
+  color: #ffffff;
+  background-color: #07856e;
 }
 
 .adminHeader {
   margin-top: 15px;
-  color: green;
+  color: #00a082;
   font-weight: bold;
   text-shadow: rgba(0, 0, 0, 0.5);
   text-align: center;
 }
 
 table {
-  background-color: rgb(235, 195, 64);
+  background-color: #ffc244;
   border-radius: 25px;
   width: 400px;
 }
 
 label {
   font-size: 15px;
-  color: green;
+  color: black;
   font-weight: bold;
 }
 

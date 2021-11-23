@@ -283,9 +283,15 @@ export default function Restaurants() {
                 <div className="card-footer">
                   <small className="text-muted">
                     <div>
-                      <a href={restaurant.glovoLink}>
-                        <button className="glovo">Glovo</button>
-                      </a>
+                      <>
+                        {restaurant.glovoLink !== null ? (
+                          <a href={restaurant.glovoLink}>
+                            <button className="glovo">Glovo</button>
+                          </a>
+                        ) : (
+                          ""
+                        )}
+                      </>
                       {restaurant.uberEatsLink !== null ? (
                         <a href={restaurant.uberEatsLink}>
                           <button className="ubereats">

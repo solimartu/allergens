@@ -47,6 +47,7 @@ export default function UserView() {
             Let's search by <span>type of food</span>
           </div>
         </div>
+        <div className="cartel2">PAGE UNDER CONSTRUCTION</div>
       </div>
     </div>
   );
