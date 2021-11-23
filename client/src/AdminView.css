@@ -76,7 +76,7 @@ label {
 
 .adminContainer {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: space-around;
   margin-top: 5px;
 }

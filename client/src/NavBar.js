@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, Outlet } from "react-router-dom";
 import "./App.css";
 import Login from "./components/Login";
 
@@ -20,13 +20,14 @@ export default function NavBar() {
       <Link style={{ textDecoration: "none" }} to="/">
         <button className="homeButton">HOME</button>
       </Link>
+
       <form
         className="form-inline my-2 my-lg-0"
         onSubmit={(e) => handleSubmit(e)}
       >
         <input
           onChange={(e) => handleChange(e)}
-          className="input"
+          className="pl-2 input"
           name="restaurant"
           value={input}
           placeholder="search..."
@@ -57,6 +58,9 @@ export default function NavBar() {
           </Link>
         </div>
       </div>
+      <Link style={{ textDecoration: "none" }} to="/login">
+        <button className="homeButton">LogIn</button>
+      </Link>
     </div>
   );
 }

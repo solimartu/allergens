@@ -7,10 +7,13 @@ export default function Restaurants() {
   let [restaurants, setRestaurants] = useState([]);
   let [title, setTitle] = useState([]);
   let { typeOfFoodID } = useParams();
+  let [error, setError] = useState([]);
+
+  let [filteredRestaurants, setFilteredRestaurants] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
-      const response = await fetch(`/restaurants/?typeOfFood=${typeOfFoodID}`);
+      const response = await fetch(`/restaurants/`);
       const restaurants = await response.json();
 
       setRestaurants(restaurants);
@@ -18,14 +21,97 @@ export default function Restaurants() {
     fetchData();
   }, [typeOfFoodID]);
 
+  let [foodTypes, setFoodTypes] = useState([]);
+  let [allergyTypes, setAllergyTypes] = useState([]);
+  let [deliveryServices, setDeliveryServices] = useState([]);
+
   useEffect(() => {
-    const fetchData = async () => {
-      const response2 = await fetch(`foodTypes/${typeOfFoodID}`);
-      const title = await response2.json();
-      setTitle(title);
-    };
-    fetchData();
-  }, [typeOfFoodID]);
+    getFoodTypes();
+    getAllergyTypes();
+    getDeliveryServices();
+  }, []);
+
+  useEffect(() => {
+    getFilteredRestaurants();
+  }, [foodTypes, allergyTypes, deliveryServices]);
+
+  const getFoodTypes = () => {
+    fetch("/foodtypes")
+      .then((response) => response.json())
+      .then((foodTypes) =>
+        setFoodTypes(foodTypes.map((el) => ({ ...el, checked: false })))
+      )
+      .catch((error) => setError(error));
+  };
+  const changeCheck = (id) => {
+    setFoodTypes((state) =>
+      state.map((el) => ({
+        ...el,
+        checked: el.id === id ? !el.checked : el.checked,
+      }))
+    );
+  };
+
+  const getAllergyTypes = () => {
+    fetch("/allergytypes")
+      .then((response) => response.json())
+      .then((allergyTypes) =>
+        setAllergyTypes(allergyTypes.map((el) => ({ ...el, checked: false })))
+      )
+      .catch((error) => setError(error));
+  };
+  const changeCheckA = (id) => {
+    setAllergyTypes((state) =>
+      state.map((el) => ({
+        ...el,
+        checked: el.id === id ? !el.checked : el.checked,
+      }))
+    );
+  };
+
+  const getDeliveryServices = () => {
+    fetch("/deliveryservices")
+      .then((response) => response.json())
+      .then((deliveryServices) =>
+        setDeliveryServices(
+          deliveryServices.map((el) => ({ ...el, checked: false }))
+        )
+      )
+      .catch((error) => setError(error));
+  };
+  const changeCheckD = (id) => {
+    setDeliveryServices((state) =>
+      state.map((el) => ({
+        ...el,
+        checked: el.id === id ? !el.checked : el.checked,
+      }))
+    );
+  };
+
+  const getFilteredRestaurants = () => {
+    const selectedFoods = foodTypes
+      .filter((foodType) => foodType.checked) // filtro solo los que seleccioné (checked true)
+      .map((foodType) => foodType.id) // los dispongo todos, mostrando sus ids
+      .join(","); // los uno resultando una string separada por comas
+    console.log(selectedFoods);
+    //necesito un objeto, conteniendo cada uno de los tipos de comida seleccionados, en el tipo "{typeOfFood:1}"
+    const filtro = {};
+
+    if (selectedFoods.length !== 0) filtro.foodTypes = selectedFoods; //{"foodTypes":"1,4,5"}
+    //necesito traducirlo a querymode
+    const filtroCombinado = [];
+    for (const key in filtro) {
+      filtroCombinado.push(`${key}=${filtro[key]}`); //voy tirando cada selección (traducida en una string) a un array que luego desintegraré
+    }
+    //para la query los necesito como "typeOfFood=1,4,7&" y si tengo más de un tipo de selección incluida deben estar unidos entre si con &
+    const combinedQueryStringified =
+      filtroCombinado.length !== 0 ? `?${filtroCombinado.join("&")}` : "";
+
+    fetch(`/restaurants/${combinedQueryStringified}`)
+      .then((response) => response.json())
+      .then((restaurants) => setFilteredRestaurants(restaurants))
+      .catch((error) => setError(error));
+  };
 
   const sortArray = (type) => {
     const types = {
@@ -57,8 +143,8 @@ export default function Restaurants() {
   return (
     <div>
       <div className="sort">
-        <div className="dropdown2">
-          <button className="dropbtn2">SORT BY</button>
+        <div className="row px-4">
+          {/* <button className="dropbtn2">SORT BY</button>
           <div className="dropdown-content2">
             <button
               value="rating"
@@ -75,6 +161,86 @@ export default function Restaurants() {
             >
               RESTAURANT
             </button>
+          </div> */}
+          <div className="d-flex align-items-center">
+            <div className="col-1 text-center text-glovo-inv d-flex flex-column">
+              <h6 className="text-center mbm1">FILTER</h6>
+              <h3 className="text-center bold let25">BY</h3>
+            </div>
+            <div className="col-3 roundedbig bg-glovo-inv shadow flex-column p-2">
+              <h6 className="text-glovo-inv mb-1 let25">TYPE OF FOOD</h6>
+              <div className="d-flex flex-wrap justify-content-center">
+                {foodTypes.length > 0 &&
+                  foodTypes.map((foodType) => (
+                    <div className="bg-glovo-light rounded shadow p-1 m-1">
+                      <input
+                        type="checkbox"
+                        id="food"
+                        name=""
+                        key={foodType.id}
+                        checked={foodType.checked}
+                        onChange={() => changeCheck(foodType.id)}
+                        className=""
+                      ></input>
+                      <label for="food" className="text-glovo ml-1">
+                        {foodType.typeOfFood}
+                      </label>
+                    </div>
+                  ))}
+              </div>
+            </div>
+            <div className="col-1 text-center text-glovo-inv d-flex flex-column">
+              <h6 className="text-center mbm1 let20">AND</h6>
+              <h3 className="text-center bold let25">OR</h3>
+            </div>
+            <div className="col-3 roundedbig bg-glovo-inv shadow flex-column p-2">
+              <h6 className="text-glovo-inv mb-1 let25">TYPE OF ALLERGY</h6>
+              <div className="d-flex flex-wrap justify-content-center">
+                {allergyTypes.length > 0 &&
+                  allergyTypes.map((allergyType) => (
+                    <div className="bg-glovo-light rounded shadow p-1 m-1">
+                      <input
+                        type="checkbox"
+                        id="allergy"
+                        name=""
+                        key={allergyType.id}
+                        checked={allergyType.checked}
+                        onChange={() => changeCheckA(allergyType.id)}
+                        className=""
+                      ></input>
+                      <label for="allergy" className="text-glovo ml-1">
+                        {allergyType.typeOfAllergy}
+                      </label>
+                    </div>
+                  ))}
+              </div>
+            </div>
+            <div className="col-1 text-center text-glovo-inv d-flex flex-column">
+              <h6 className="text-center mbm1 let20">AND</h6>
+              <h3 className="text-center bold let25">OR</h3>
+            </div>
+            <div className="col-3 roundedbig bg-glovo-inv shadow flex-column p-2">
+              <h6 className="text-glovo-inv mb-1 let25">DELIVERY SERVICE</h6>
+              <div className="d-flex flex-wrap justify-content-center">
+                {deliveryServices.length > 0 &&
+                  deliveryServices.map((deliveryService) => (
+                    <div className="bg-glovo-light rounded shadow p-1 m-1">
+                      <input
+                        type="checkbox"
+                        id="ds"
+                        name=""
+                        key={deliveryService.id}
+                        checked={deliveryService.checked}
+                        onChange={() => changeCheckD(deliveryService.id)}
+                        className=""
+                      ></input>
+                      <label for="ds" className="text-glovo ml-1">
+                        {deliveryService.name}
+                      </label>
+                    </div>
+                  ))}
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -90,7 +256,7 @@ export default function Restaurants() {
           className="my-masonry-grid"
           columnClassName="my-masonry-grid_column"
         >
-          {restaurants.map((restaurant) => (
+          {filteredRestaurants.map((restaurant) => (
             <div>
               <div className="card grid-item">
                 <img
@@ -119,6 +285,15 @@ export default function Restaurants() {
                       <a href={restaurant.glovoLink}>
                         <button className="glovo">Glovo</button>
                       </a>
+                      {restaurant.uberEatsLink !== null ? (
+                        <a href={restaurant.uberEatsLink}>
+                          <button className="ubereats">
+                            Uber<span>Eats</span>
+                          </button>
+                        </a>
+                      ) : (
+                        ""
+                      )}
                     </div>
                   </small>
                 </div>
@@ -126,6 +301,7 @@ export default function Restaurants() {
             </div>
           ))}
         </Masonry>
+        <div></div>
       </div>
     </div>
   );

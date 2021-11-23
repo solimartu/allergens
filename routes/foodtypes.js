@@ -85,4 +85,40 @@ router.get("/search", function (req, res) {
     });
 });
 
+// get all artists with their album counts:
+router.get("/restaurantcount", function (req, res) {
+  models.FoodType.findAll({
+    attributes: {
+      include: [
+        [
+          models.Sequelize.fn("COUNT", models.Sequelize.col("restaurant.id")),
+          "restaurantCount",
+        ],
+      ],
+    },
+    include: {
+      model: models.Restaurant,
+      attributes: [], // important
+    },
+    group: ["FoodType.id"], // necessary when selecting many records
+  })
+    .then((data) => res.send(data))
+    .catch((error) => {
+      res.status(500).send(error);
+    });
+});
+
+router.delete("/:id", async function (req, res, next) {
+  try {
+    await models.FoodType.destroy({
+      where: {
+        id: req.params.id,
+      },
+    });
+    res.send(data); //check como lo hice en el otro
+  } catch (error) {
+    res.status(500).send(error);
+  }
+});
+
 module.exports = router;

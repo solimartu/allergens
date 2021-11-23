@@ -33,11 +33,20 @@ export default function UserView() {
                 style={{ textDecoration: "none" }}
               >
                 <i className="material-icons md-36">{foodType.icon}</i>
+                <p className="text-white">{foodType.typeOfFood}</p>
               </Link>{" "}
             </div>
           ))}
           <Outlet />
         </label>
+        <div className="rounded bg-white cartel shadow d-flex p-0">
+          <div className="rounded-left bg-glovo-inv p-2 px-3 text-white">
+            __
+          </div>
+          <div className="p-2">
+            Let's search by <span>type of food</span>
+          </div>
+        </div>
       </div>
     </div>
   );

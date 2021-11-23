@@ -40,12 +40,13 @@ body {
 
 .material-icons.md-36 {
   font-size: 36px;
-  color: green;
+  color: #00a082;
+  margin-top: 11px;
 }
 
 .btn {
-  background-color: rgb(235, 195, 64);
-  color: green;
+  background-color: #ffc244;
+  color: #00a082;
   font-size: 15px;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -57,10 +58,13 @@ body {
   -ms-flex-align: center;
   align-items: center;
 
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+  box-shadow: -10px 13px 3px rgb(0 0 0 / 12%), 0 1px 2px rgba(0, 0, 0, 0.24);
 
   -webkit-transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
   transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+.btn p {
+  margin-top: -9px;
 }
 
 .btn:not(:first-child) {
@@ -188,4 +192,26 @@ body {
 .menuInput#toggle:checked ~ #show-menu .btn .closeBtn {
   transform: translateY(0px);
   opacity: 1;
+}
+.cartel {
+  position: relative;
+  top: 250px;
+  padding: 15px 20px;
+  left: -133px;
+  font-weight: 600;
+}
+.cartel span {
+  font-size: 22px;
+  letter-spacing: 0.1rem;
+  font-weight: 700;
+}
+.shadow {
+  box-shadow: 0 1px 3px rgb(0 0 0 / 12%);
+}
+.bg-glovo-inv {
+  background-color: #00a082;
+}
+.rounded-left {
+  border-top-left-radius: 0.25rem;
+  border-bottom-left-radius: 0.25rem;
 }

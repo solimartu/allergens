@@ -13,11 +13,14 @@ export default function AdminView() {
     glovoRating: null,
     uberEatsLink: "",
     uberEatsRating: null,
-    typeOfFood: [],
-    typeOfAllergy: [],
-    deliveryServices: [],
+    typeOfFood: "",
+    typeOfAllergy: "",
+    name: "",
   });
   let [restaurante, setRestaurante] = useState(null);
+  let [everyrtof, setEveryrtof] = useState([]);
+  let [everyrtoa, setEveryrtoa] = useState([]);
+  let [everyrtod, setEveryrtod] = useState([]);
   let [allRestaurants, setAllRestaurants] = useState([]);
   let [foodTypes, setFoodTypes] = useState([]);
   let [allergyTypes, setAllergyTypes] = useState([]);
@@ -34,13 +37,15 @@ export default function AdminView() {
   const {
     restaurant,
     allergyMenu,
-    typeOfFoodID,
     glovoLink,
     uberEatsLink,
     glovoRating,
     uberEatsRating,
     imgLink,
     address,
+    typeOfFood,
+    typeOfAllergy,
+    name,
   } = input;
 
   useEffect(() => {
@@ -84,12 +89,46 @@ export default function AdminView() {
   };
 
   const handleSubmit = (event) => {
+    event.preventDefault();
     addRestaurant();
+  };
+  let arr = [];
+  const handleMultipleFoodTypes = (event) => {
+    // const name = event.target.name;
+    let value = Array.from(
+      event.target.selectedOptions,
+      (option) => option.value
+    );
+    setInput({ ...input, typeOfFood: value });
+  };
+
+  const handleMultipleAllergyTypes = (event) => {
+    // const name = event.target.name;
+    let value = Array.from(
+      event.target.selectedOptions,
+      (option) => option.value
+    );
+    setInput({ ...input, typeOfAllergy: value });
+    // setEveryrtoa(value);
+  };
+
+  const handleMultipleDeliveryServices = (event) => {
+    let value = Array.from(
+      event.target.selectedOptions,
+      (option) => option.value
+    );
+    setInput({ ...input, name: value });
+    // setEveryrtod(value);
   };
 
   //doesn't update the table until the page refreshes
   const addRestaurant = async () => {
-    //event.preventDefault();
+    // setInput({
+    //   ...input,
+    //   ["typeOfFood"]: everyrtof,
+    //   ["typeOfAllergy"]: everyrtoa,
+    //   ["deliveryServices"]: everyrtod,
+    // });
     try {
       const res = await fetch("/restaurants", {
         method: "POST",
@@ -99,17 +138,18 @@ export default function AdminView() {
         body: JSON.stringify({
           restaurant,
           allergyMenu,
-          typeOfFoodID,
           glovoLink,
           uberEatsLink,
           glovoRating,
           uberEatsRating,
+          typeOfFood,
+          typeOfAllergy,
+          name,
         }),
       });
-
-      setInput("");
+      // setInput("");
       const data = await res.json();
-      setRestaurante(data);
+      // setRestaurante(data);
     } catch (err) {
       console.log(err);
     }
@@ -129,8 +169,8 @@ export default function AdminView() {
 
   return (
     <div>
-      <div className="adminContainer p-2">
-        <form className="adminForm" onSubmit={(e) => handleSubmit(e)}>
+      <div className="adminContainer p-2 d-flex">
+        <form className="adminForm col-5" onSubmit={(e) => handleSubmit(e)}>
           <div>
             <h5 className="adminHeader">Add Restaurant to Database</h5>
           </div>
@@ -226,39 +266,34 @@ export default function AdminView() {
           </div>
           <div className="d-flex">
             <div className="form-group col-4">
-              <label htmlFor="foodTypes">Type of Food</label>
+              <label htmlFor="typeOfFood">Type of Food</label>
+
               <select
                 multiple
                 class="form-control"
-                name="foodTypes"
-                id="foodTypes"
-                value={foodTypes}
-                // onMultipleSelection={()=> }
+                size={foodTypes.length}
+                name="typeOfFood"
+                onChange={(e) => handleMultipleFoodTypes(e)}
               >
                 {foodTypes.map((foodtype) => (
-                  <option key={foodtype.id}>{foodtype.typeOfFood}</option>
+                  <option value={Number(foodtype.id)}>
+                    {foodtype.typeOfFood}
+                  </option>
                 ))}
               </select>
-              {/* <input
-                onChange={(e) => handleChange(e)}
-                value={input.typeOfFoodID}
-                placeholder="typeOfFoodID"
-                name="typeOfFoodID"
-                className="form-control"
-              ></input> */}
             </div>
 
             <div class="form-group col-4">
-              <label htmlFor="allergyTypes">Type of Allergies</label>
+              <label htmlFor="typeOfAllergy">Type of Allergies</label>
               <select
                 multiple
                 class="form-control"
-                name="allergyTypes"
-                id="allergyTypes"
-                value={allergyTypes}
+                name="typeOfAllergy"
+                size={allergyTypes.length}
+                onChange={(e) => handleMultipleAllergyTypes(e)}
               >
                 {allergyTypes.map((allergytype) => (
-                  <option key={allergytype.id}>
+                  <option key={allergytype.id} value={allergytype.id}>
                     {allergytype.typeOfAllergy}
                   </option>
                 ))}
@@ -269,12 +304,12 @@ export default function AdminView() {
               <select
                 multiple
                 class="form-control"
-                name="deliveryServices"
-                id="deliveryServices"
-                value={deliveryServices}
+                size={deliveryServices.length}
+                name="name"
+                onChange={(e) => handleMultipleDeliveryServices(e)}
               >
                 {deliveryServices.map((deliveryservice) => (
-                  <option key={deliveryservice.id}>
+                  <option key={deliveryservice.id} value={deliveryservice.id}>
                     {deliveryservice.name}
                   </option>
                 ))}
@@ -286,18 +321,21 @@ export default function AdminView() {
           </div>
         </form>
 
-        <div className="table-wrapper-scroll-y my-custom-scrollbar adminBox">
+        <div className="col-6">
           <table className="table table-striped mb-0">
             <thead>
               <tr>
-                <th scope="col">Id</th>
                 <th scope="col">Restaurant Name</th>
+                {/* <th scope="col">Allergy Menu</th> */}
+                {/* <th scope="col">Glovo Link</th> */}
+                <th scope="col">Glovo Rating</th>
+                {/* <th scope="col">UberEats Link</th> */}
+                <th scope="col">UberEats Rating</th>
               </tr>
             </thead>
             <tbody>
               {allRestaurants.map((restaurant) => (
                 <tr>
-                  <td>{restaurant.id}.</td>{" "}
                   <td>
                     {restaurant.restaurant}{" "}
                     <button
@@ -315,6 +353,11 @@ export default function AdminView() {
                       x
                     </button>
                   </td>
+                  {/* <td>{restaurant.allergyMenu}</td>
+                  <td>{restaurant.glovoLink}</td> */}
+                  <td className="text-center">{restaurant.glovoRating}</td>
+                  {/* <td>{restaurant.uberEatsLink}</td> */}
+                  <td className="text-center">{restaurant.uberEatsRating}</td>
                 </tr>
               ))}
             </tbody>

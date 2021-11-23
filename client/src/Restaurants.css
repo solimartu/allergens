@@ -13,9 +13,9 @@
 }
 
 .glovo {
-  background-color: rgb(235, 195, 64);
-  color: green;
-  font-weight: bold;
+  background-color: #ffc244;
+  color: #00a082;
+  font-weight: 600;
   border: none;
   border-radius: 25px;
   padding-left: 5px;
@@ -25,8 +25,29 @@
 }
 
 .glovo:hover {
-  background-color: green;
-  color: rgb(235, 195, 64);
+  background-color: #00a082;
+  color: #ffc244;
+}
+
+.ubereats {
+  background-color: #ffffff;
+  color: black;
+  font-weight: 600;
+  border: none;
+  border-radius: 25px;
+  padding-left: 5px;
+  padding-right: 5px;
+  margin: 5px;
+  box-shadow: 3px 3px;
+}
+.ubereats span {
+  color: #06c167;
+  font-weight: bolder;
+}
+
+.ubereats:hover {
+  background-color: black;
+  color: #ffffff;
 }
 
 .allergy {
@@ -59,7 +80,7 @@
   margin-left: 70px; /* gutter size offset */
   width: auto;
   margin-top: 30px;
-  margin-right: 100px;
+  margin-right: 70px;
   margin-bottom: 100px;
 }
 .my-masonry-grid_column {
@@ -90,7 +111,7 @@ body {
 .resultsTitle {
   padding: 10px;
   text-align: center;
-  background-color: rgb(235, 195, 64);
+  background-color: #ffc244;
   font-weight: bold;
 }
 
@@ -110,8 +131,8 @@ body {
 }
 
 .dropbtn2 {
-  color: green;
-  background-color: rgb(235, 195, 64);
+  color: #00a082;
+  background-color: #ffc244;
   margin-top: 10px;
   font-size: 15px;
   margin-left: 90px;
@@ -128,7 +149,7 @@ body {
 
 .dropbtn2:hover {
   color: rgb(235, 195, 64);
-  background-color: green;
+  background-color: #00a082;
 }
 
 .dropdown2 {
@@ -168,4 +189,42 @@ body {
 .loading {
   text-align: center;
   margin-top: 50px;
+}
+
+.ml-1 {
+  margin-left: 0.25rem;
+}
+
+.bg-glovo {
+  background-color: rgb(235, 195, 64);
+}
+.bg-glovo-inv {
+  background-color: #00a082;
+}
+.text-glovo {
+  color: #00a082;
+}
+.text-glovo-inv {
+  color: #ffc244;
+}
+.bg-glovo-light {
+  background-color: #faf1d1;
+}
+.shadow {
+  box-shadow: 0 1px 3px rgb(0 0 0 / 12%);
+}
+.bold {
+  font-weight: bolder;
+}
+.let25 {
+  letter-spacing: 0.25rem;
+}
+.let20 {
+  letter-spacing: 0.2rem;
+}
+.mbm1 {
+  margin-bottom: -0.1rem !important;
+}
+.roundedbig {
+  border-radius: 1.5rem !important;
 }

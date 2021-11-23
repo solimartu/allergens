@@ -120,4 +120,17 @@ router.put("/:id/restaurants", async (req, res) => {
   }
 });
 
+router.delete("/:id", async function (req, res, next) {
+  try {
+    await models.DeliveryService.destroy({
+      where: {
+        id: req.params.id,
+      },
+    });
+    res.send(data); //check como lo hice en el otro
+  } catch (error) {
+    res.status(500).send(error);
+  }
+});
+
 module.exports = router;

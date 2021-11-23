@@ -6,7 +6,16 @@ var models = require("../models");
 //GET all the restaurants list WORKING
 router.get("/", async function (req, res) {
   try {
-    const restaurants = await models.Restaurant.findAll(); // idem a SELECT * FROM restaurants;
+    const restaurants = await models.Restaurant
+      .findAll
+      //   {
+      //   include: [
+      //     { model: models.FoodType },
+      //     { model: models.AllergyType },
+      //     { model: models.DeliveryService },
+      //   ],
+      // }
+      (); // idem a SELECT * FROM restaurants;
     res.send(restaurants);
   } catch (error) {
     res.status(500).send(error);
@@ -34,6 +43,13 @@ router.get("/:id", async function (req, res) {
       where: {
         id: req.params.id,
       },
+      include: [
+        { model: models.FoodType },
+        { model: models.AllergyType },
+        { model: models.DeliveryService },
+      ],
+      //or
+      // include: { all: true },
     });
     res.send(restaurant);
   } catch (error) {
@@ -70,7 +86,7 @@ router.post("/", async (req, res) => {
       typeOfAllergy,
       name,
     } = req.body;
-    const result = await models.Restaurant.create({
+    const newRestaurant = await models.Restaurant.create({
       restaurant,
       glovoLink,
       glovoRating,
@@ -80,10 +96,10 @@ router.post("/", async (req, res) => {
       address,
       allergyMenu,
     });
-    if (typeOfFood) await setFoodType.setFoodType(typeOfFood);
-    if (typeOfAllergy) await Restaurant.setAllergyType(typeOfAllergy);
-    if (name) await Restaurant.setDeliveryService(name);
-    res.status(201).send(result);
+    if (typeOfFood) await newRestaurant.setFoodTypes(typeOfFood);
+    if (typeOfAllergy) await newRestaurant.setAllergyTypes(typeOfAllergy);
+    if (name) await newRestaurant.setDeliveryServices(name);
+    res.status(201).send(newRestaurant);
   } catch (error) {
     res.status(500).send(error);
   }
@@ -98,17 +114,63 @@ router.post("/", async (req, res) => {
 
 //OLD SCHOOL
 //DELETE one restaurant by ID NOT WORKING
-// router.delete("/:id", async function (req, res, next) {
-//   try {
-//     const restaurant = await models.Restaurant.findOne({
-//       where: {
-//         id: req.params.id,
-//       },
-//     });
-//     res.send(restaurant);
-//   } catch (error) {
-//     res.status(500).send(error);
-//   }
-// });
+router.delete("/:id", async function (req, res, next) {
+  try {
+    const restaurant = await models.Restaurant.destroy({
+      where: {
+        id: req.params.id,
+      },
+    });
+    res.send(restaurant);
+  } catch (error) {
+    res.status(500).send(error);
+  }
+});
+
+//no segura porque me crea uno nuevo...
+router.post("/:id/foodtypes", function (req, res) {
+  const { id } = req.params;
+  const { typeOfFood } = req.body;
+
+  models.Restaurant.findOne({
+    where: {
+      id,
+    },
+  })
+    .then((restaurant) => {
+      restaurant
+        .createFoodType({ typeOfFood })
+        .then((data) => {
+          res.send(data);
+        })
+        .catch((error) => {
+          res.status(500).send(error);
+        });
+    })
+    .catch((error) => {
+      res.status(500).send(error);
+    });
+});
+
+//get tipos de comida de un determinado restaurant... serviría al reves... los restaurantes de tal tipo de comida, no?
+router.get("/:id/foodtypes", function (req, res) {
+  models.Restaurant.findOne({
+    where: {
+      id,
+    },
+  }).then((restaurant) => {
+    restaurant.createFoodtype({ typeOfFood }).then((data) => {
+      res.send(data);
+    });
+  });
+});
+
+//no entiendo esto
+router.get("/raw", async function (req, res) {
+  const [results, metadata] = await models.sequelize.query(
+    "SELECT `Restaurant`.`id`, `Restaurant`.`restaurant`, `Restaurant`.`createdAt`, `Restaurant`.`updatedAt`, `FoodType`.`id` AS `FoodType.id`, `FoodType`.`typeOfFood` AS `FoodType.typeOfFood`, `FoodType`.`createdAt` AS `FoodType.createdAt`, `FoodType`.`updatedAt` AS `FoodType.updatedAt`, `FoodType->restaurantfoodtypes`.`createdAt` AS `FoodType.restaurantfoodtypes.createdAt`, `FoodType->restaurantfoodtypes`.`updatedAt` AS `FoodType.restaurantfoodtypes.updatedAt`, `FoodType->restaurantfoodtypes`.`restaurantId` AS `FoodType.restaurantfoodtypes.restaurantId`, `FoodType->restaurantfoodtypes`.`FoodtypeId` AS `FoodType.restaurantfoodtypes.FoodtypeId` FROM `Restaurants` AS `Restaurant` LEFT OUTER JOIN ( `restaurantfoodtypes` AS `Restaurant->restaurantfoodtypes` INNER JOIN `FoodType` AS `FoodType` ON `FoodType`.`id` = `FoodType->restaurantfoodtypes`.`FoodtypeId`) ON `Restaurant`.`id` = `FoodType->restaurantfoodtypes`.`RestaurantId`;"
+  );
+  res.send(results);
+});
 
 module.exports = router;
