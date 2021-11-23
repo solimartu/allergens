@@ -43,6 +43,14 @@ body {
   color: #00a082;
   margin-top: 11px;
 }
+.material-icons-main {
+  font-size: 40px;
+  color: #00a082;
+  margin-top: 0px;
+}
+.material-icons-main:hover {
+  transform: scale(1.15);
+}
 
 .btn {
   background-color: #ffc244;

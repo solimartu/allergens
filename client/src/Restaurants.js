@@ -6,20 +6,8 @@ import Masonry from "react-masonry-css";
 export default function Restaurants() {
   let [restaurants, setRestaurants] = useState([]);
   let [title, setTitle] = useState([]);
-  let { typeOfFoodID } = useParams();
+
   let [error, setError] = useState([]);
-
-  let [filteredRestaurants, setFilteredRestaurants] = useState([]);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      const response = await fetch(`/restaurants/`);
-      const restaurants = await response.json();
-
-      setRestaurants(restaurants);
-    };
-    fetchData();
-  }, [typeOfFoodID]);
 
   let [foodTypes, setFoodTypes] = useState([]);
   let [allergyTypes, setAllergyTypes] = useState([]);
@@ -93,13 +81,26 @@ export default function Restaurants() {
       .filter((foodType) => foodType.checked) // filtro solo los que seleccioné (checked true)
       .map((foodType) => foodType.id) // los dispongo todos, mostrando sus ids
       .join(","); // los uno resultando una string separada por comas
-    console.log(selectedFoods);
+    const selectedAllergies = allergyTypes
+      .filter((allergyType) => allergyType.checked)
+      .map((allergyType) => allergyType.id)
+      .join(",");
+    const selectedDeliveries = deliveryServices
+      .filter((deliveryService) => deliveryService.checked)
+      .map((deliveryService) => deliveryService.id)
+      .join(",");
+    console.log("selected foods", selectedFoods);
     //necesito un objeto, conteniendo cada uno de los tipos de comida seleccionados, en el tipo "{typeOfFood:1}"
     const filtro = {};
-
+    console.log("filtro", filtro);
     if (selectedFoods.length !== 0) filtro.foodTypes = selectedFoods; //{"foodTypes":"1,4,5"}
+    if (selectedAllergies.length !== 0) filtro.allergyTypes = selectedAllergies;
+    if (selectedDeliveries.length !== 0)
+      filtro.deliveryServices = selectedDeliveries;
     //necesito traducirlo a querymode
+
     const filtroCombinado = [];
+    // console.log("filtro combinado", filtroCombinado);
     for (const key in filtro) {
       filtroCombinado.push(`${key}=${filtro[key]}`); //voy tirando cada selección (traducida en una string) a un array que luego desintegraré
     }
@@ -109,7 +110,7 @@ export default function Restaurants() {
 
     fetch(`/restaurants/${combinedQueryStringified}`)
       .then((response) => response.json())
-      .then((restaurants) => setFilteredRestaurants(restaurants))
+      .then((restaurants) => setRestaurants(restaurants))
       .catch((error) => setError(error));
   };
 
@@ -256,7 +257,7 @@ export default function Restaurants() {
           className="my-masonry-grid"
           columnClassName="my-masonry-grid_column"
         >
-          {filteredRestaurants.map((restaurant) => (
+          {restaurants.map((restaurant) => (
             <div>
               <div className="card grid-item">
                 <img

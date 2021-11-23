@@ -30,8 +30,8 @@ body {
 .dropbtn,
 .searchButton,
 .homeButton {
-  color: #00a082;
-  background-color: #ffc244;
+  color: #ffffff;
+  background-color: #00a082;
   margin-top: 5px;
   font-size: 15px;
   margin-right: 10px;
@@ -48,8 +48,8 @@ body {
 .searchButton:hover,
 .homeButton:hover,
 .dropbtn:hover {
-  color: #ffc244;
-  background-color: #00a082;
+  color: #ffffff;
+  background-color: #07856e;
 }
 
 .dropdown {

@@ -6,35 +6,48 @@ var models = require("../models");
 //GET all the restaurants list WORKING
 router.get("/", async function (req, res) {
   try {
-    const restaurants = await models.Restaurant
-      .findAll
-      //   {
-      //   include: [
-      //     { model: models.FoodType },
-      //     { model: models.AllergyType },
-      //     { model: models.DeliveryService },
-      //   ],
-      // }
-      (); // idem a SELECT * FROM restaurants;
+    const restaurants = await models.Restaurant.findAll({
+      include: [
+        {
+          model: models.FoodType,
+          through: {
+            where: req.query.foodTypes
+              ? {
+                  FoodtypeId: req.query.foodTypes.split(","),
+                }
+              : true,
+          },
+          required: true,
+        },
+        {
+          model: models.DeliveryService,
+          through: {
+            where: req.query.deliveryServices
+              ? {
+                  DeliveryServiceId: req.query.deliveryServices.split(","),
+                }
+              : true,
+          },
+          required: true,
+        },
+        {
+          model: models.AllergyType,
+          through: {
+            where: req.query.allergyTypes
+              ? {
+                  AllergytypeId: req.query.allergyTypes.split(","),
+                }
+              : true,
+          },
+          required: true,
+        },
+      ],
+    }); // idem a SELECT * FROM restaurants;
     res.send(restaurants);
   } catch (error) {
     res.status(500).send(error);
   }
 });
-
-// router.get("/", async function (req, res) {
-//   // const { typeOfFood, typeOfAllergy } = req.query;
-//   try {
-//     const restaurants = await models.Restaurant.findAll({
-//       where: {
-//         foodTypeId: 5,
-//       },
-//     }); // idem a SELECT * FROM restaurants;
-//     res.send(restaurants);
-//   } catch (error) {
-//     res.status(500).send(error);
-//   }
-// });
 
 //GET ONE restaurant by id WORKING
 router.get("/:id", async function (req, res) {
@@ -48,8 +61,6 @@ router.get("/:id", async function (req, res) {
         { model: models.AllergyType },
         { model: models.DeliveryService },
       ],
-      //or
-      // include: { all: true },
     });
     res.send(restaurant);
   } catch (error) {
@@ -57,20 +68,6 @@ router.get("/:id", async function (req, res) {
   }
 });
 
-// router.get("/", function (req, res) {
-//   models.Restaurant.findAll({
-//     where: {
-//       FoodtypeId: 1,
-//       [Op.and]: { AllergyType: 1 },
-//     },
-//   })
-//     .then((data) => res.send(data))
-//     .catch((error) => {
-//       res.status(500).send(error);
-//     });
-// });
-
-//see if it is the same for me or not... post a many to many
 router.post("/", async (req, res) => {
   try {
     const {
@@ -105,15 +102,6 @@ router.post("/", async (req, res) => {
   }
 });
 
-// router.post("/", async function (req, res) => {
-//   try {
-//     const resto = await Restaurant.setFoodType()
-
-//   }
-// })
-
-//OLD SCHOOL
-//DELETE one restaurant by ID NOT WORKING
 router.delete("/:id", async function (req, res, next) {
   try {
     const restaurant = await models.Restaurant.destroy({
@@ -163,14 +151,6 @@ router.get("/:id/foodtypes", function (req, res) {
       res.send(data);
     });
   });
-});
-
-//no entiendo esto
-router.get("/raw", async function (req, res) {
-  const [results, metadata] = await models.sequelize.query(
-    "SELECT `Restaurant`.`id`, `Restaurant`.`restaurant`, `Restaurant`.`createdAt`, `Restaurant`.`updatedAt`, `FoodType`.`id` AS `FoodType.id`, `FoodType`.`typeOfFood` AS `FoodType.typeOfFood`, `FoodType`.`createdAt` AS `FoodType.createdAt`, `FoodType`.`updatedAt` AS `FoodType.updatedAt`, `FoodType->restaurantfoodtypes`.`createdAt` AS `FoodType.restaurantfoodtypes.createdAt`, `FoodType->restaurantfoodtypes`.`updatedAt` AS `FoodType.restaurantfoodtypes.updatedAt`, `FoodType->restaurantfoodtypes`.`restaurantId` AS `FoodType.restaurantfoodtypes.restaurantId`, `FoodType->restaurantfoodtypes`.`FoodtypeId` AS `FoodType.restaurantfoodtypes.FoodtypeId` FROM `Restaurants` AS `Restaurant` LEFT OUTER JOIN ( `restaurantfoodtypes` AS `Restaurant->restaurantfoodtypes` INNER JOIN `FoodType` AS `FoodType` ON `FoodType`.`id` = `FoodType->restaurantfoodtypes`.`FoodtypeId`) ON `Restaurant`.`id` = `FoodType->restaurantfoodtypes`.`RestaurantId`;"
-  );
-  res.send(results);
 });
 
 module.exports = router;

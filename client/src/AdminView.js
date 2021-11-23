@@ -27,13 +27,6 @@ export default function AdminView() {
   let [deliveryServices, setDeliveryServices] = useState([]);
   let [error, setError] = useState(null);
 
-  // const onMultipleSelection = () => {
-  //   const
-  //   setRestFoodtypes((state) => ({
-  //     ...state, restaurantId: restaurants.id, FoodtypeId:
-  //   }))
-  // }
-
   const {
     restaurant,
     allergyMenu,
@@ -123,12 +116,6 @@ export default function AdminView() {
 
   //doesn't update the table until the page refreshes
   const addRestaurant = async () => {
-    // setInput({
-    //   ...input,
-    //   ["typeOfFood"]: everyrtof,
-    //   ["typeOfAllergy"]: everyrtoa,
-    //   ["deliveryServices"]: everyrtod,
-    // });
     try {
       const res = await fetch("/restaurants", {
         method: "POST",
@@ -147,9 +134,8 @@ export default function AdminView() {
           name,
         }),
       });
-      // setInput("");
+
       const data = await res.json();
-      // setRestaurante(data);
     } catch (err) {
       console.log(err);
     }
