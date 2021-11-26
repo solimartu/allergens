@@ -144,23 +144,23 @@ router.post("/", async (req, res) => {
 ```
 
 Also:
-GET - /restaurants/:id - to get one restaurant by ID
-DELETE - /restaurants/:id - to delete a restaurant an all its connections
-GET - /allergytypes - to get all the types of allergies
-DELETE - /allergytypes/:id - to delete a type of allergy
-POST - /allergytypes - to create a new type of allergy
-GET - /foodtypes - to get all the types of food
-DELETE - /foodtypes/:id - to delete a type of food
-POST - /foodtypes - to create a new type of food
-GET - /deliveryservices - to get all the delivery services
-DELETE - /deliveryservices/:id - to delete a delivery service
-POST - /deliveryservices - to create a new delivery service
+- GET - /restaurants/:id - to get one restaurant by ID
+- DELETE - /restaurants/:id - to delete a restaurant an all its connections
+- GET - /allergytypes - to get all the types of allergies
+- DELETE - /allergytypes/:id - to delete a type of allergy
+- POST - /allergytypes - to create a new type of allergy
+- GET - /foodtypes - to get all the types of food
+- DELETE - /foodtypes/:id - to delete a type of food
+- POST - /foodtypes - to create a new type of food
+- GET - /deliveryservices - to get all the delivery services
+- DELETE - /deliveryservices/:id - to delete a delivery service
+- POST - /deliveryservices - to create a new delivery service
 
-- ## Database layout
+## Database layout
 
   ![Databases](./databaseschema.JPG)
 
-# Future Expansion Ideas
+# Future Expansion Ideas (from the MVP owner)
 
 - add a log in feature so users can have a profile and save their favourite restaurants. PARTIALLY DONE
 
@@ -171,5 +171,12 @@ POST - /deliveryservices - to create a new delivery service
 - add a carousel of images on each restaurant card.
 
 - add a "see more restaurants" button to the all restaurants and search results pages, limiting the amount of cards that load at the beginning.
+
+# Future extensions after this feature extension
+
+- finish the log in to have protected routes and an adminView only if you are an admin
+- Ad Gelolocation to search nearby
+- To finish the starting point if you want to start from a type of food directly or a type of allergy or delivery service.
+
 
 _This is a student project that was created at [CodeOp](http://codeop.tech), a full stack development bootcamp in Barcelona._
